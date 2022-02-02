@@ -11,8 +11,9 @@ import UserIcon from "@material-ui/icons/Group";
 import simpleRestProvider from "ra-data-simple-rest";
 import LoginPage from "./loginPage";
 
+console.log("Node ENV is: ", process.env.NODE_ENV);
 // const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
-const apiUrl = "http://localhost:4000/v1";
+const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
 const fetchJson = (url, options = {}) => {
   if (!options.headers) {
     options.headers = new Headers({ Accept: "application/json" });
