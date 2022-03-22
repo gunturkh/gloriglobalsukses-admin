@@ -17,7 +17,7 @@ const authProvider = {
         return response.json();
       })
       .then(({ tokens }) => {
-        const { access, refresh } = tokens;
+        const { access } = tokens;
         const accessToken = access.token;
         // const refreshToken = refresh.token;
         // const decodedToken = decodeJwt(accessToken);

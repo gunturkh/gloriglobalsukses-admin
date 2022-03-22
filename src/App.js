@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Admin, fetchUtils, Resource, ListGuesser } from "react-admin";
 import { stringify } from "query-string";
-import jsonServerProvider from "ra-data-json-server";
-import { UserList } from "./users";
-import { PostList, PostCreate, PostEdit } from "./posts";
+// import jsonServerProvider from "ra-data-json-server";
+// import { UserList } from "./users";
+// import { PostList, PostCreate, PostEdit } from "./posts";
 import { Dashboard } from "./Dashboard";
 import authProvider from "./authProvider";
 import PostIcon from "@material-ui/icons/Book";

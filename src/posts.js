@@ -5,7 +5,7 @@ import {
     Datagrid,
     Edit,
     EditButton,
-    DataGrid,
+    // DataGrid,
     List,
     ReferenceField,
     ReferenceInput,
@@ -20,12 +20,12 @@ const PostTitle = ({ record }) => {
     return <span>Post {record ? `"${record.title}"` : ''}</span>
 };
 
-const postFilters = [
-    <TextInput source="q" label="Search" alwaysOn />,
-    <ReferenceInput source="userId" label="User" reference="users" allowEmpty>
-        <SelectInput optionText="name" />
-    </ReferenceInput>,
-]
+// const postFilters = [
+//     <TextInput source="q" label="Search" alwaysOn />,
+//     <ReferenceInput source="userId" label="User" reference="users" allowEmpty>
+//         <SelectInput optionText="name" />
+//     </ReferenceInput>,
+// ]
 
 export const PostList = (props) => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
