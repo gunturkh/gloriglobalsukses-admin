@@ -37,7 +37,7 @@ const customDataProvider = {
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const query = {
-      sortBy: JSON.stringify([field, order]),
+      sortBy: `${field}:${order.toLowerCase()}`,
       limit: perPage,
       page: page,
       // range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),

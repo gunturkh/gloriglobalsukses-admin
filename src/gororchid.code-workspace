@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../../gor-orchid-backend"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../gororchid-platform"
+		}
+	],
+	"settings": {
+		"typescript.format.enable": false
+	}
+}
