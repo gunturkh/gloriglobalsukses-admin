@@ -1,5 +1,6 @@
 // import decodeJwt from "jwt-decode";
-const authURL = "https://gor-orchid-backend-production.up.railway.app/v1/auth";
+// const authURL = "https://gor-orchid-backend-production.up.railway.app/v1/auth";
+const authURL = `${process.env.REACT_APP_SERVER_URL}/auth`;
 
 const authProvider = {
   // called when the user attempts to log in

@@ -4,6 +4,7 @@ import { stringify } from "query-string";
 // import jsonServerProvider from "ra-data-json-server";
 // import { UserList } from "./users";
 // import { PostList, PostCreate, PostEdit } from "./posts";
+import { TrackingList, TrackingCreate, TrackingEdit } from "./components/tracking";
 import { Dashboard } from "./Dashboard";
 import authProvider from "./authProvider";
 import PostIcon from "@material-ui/icons/Book";
@@ -45,14 +46,19 @@ const customDataProvider = {
     };
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
-    return fetchJson(url).then(({ headers, json }) => ({
+    return fetchJson(url).then(({ headers, json }) => {
+      console.log('url', url)
+      console.log('headers', headers)
+      console.log('json', json)
+      return {
       data: json.results.map((item) => {
         return {
           ...item,
         };
       }),
       total: parseInt(headers.get("content-range").split("/").pop(), 10),
-    }));
+      // total: json.totalResults,
+    }});
     // const result = await dataProvider.getList(resource, params);
     // if (result) {
     //   return {
@@ -87,10 +93,11 @@ const App = () => {
       {/* <Resource name="users" list={UserList} icon={UserIcon} /> */}
       <Resource name="users" list={ListGuesser} icon={UserIcon} />
       <Resource
-        name="fields"
-        list={ListGuesser}
-        // create={PostCreate}
-        // edit={PostEdit}
+        name="tracking"
+        list={TrackingList}
+        create={TrackingCreate}
+        // edit={TrackingEdit}
+        edit={TrackingEdit}
         icon={PostIcon}
       />
     </Admin>
