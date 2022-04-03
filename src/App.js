@@ -41,6 +41,7 @@ const customDataProvider = {
       sortBy: `${field}:${order.toLowerCase()}`,
       limit: perPage,
       page: page,
+      ...params.filter,
       // range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
       // filter: JSON.stringify(params.filter),
     };

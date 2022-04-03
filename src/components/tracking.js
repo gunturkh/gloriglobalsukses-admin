@@ -21,17 +21,18 @@ const TrackingTitle = ({ record }) => {
     return <span>Tracking {record ? `"${record.title}"` : ''}</span>
 };
 
-// const postFilters = [
-//     <TextInput source="q" label="Search" alwaysOn />,
-//     <ReferenceInput source="userId" label="User" reference="users" allowEmpty>
-//         <SelectInput optionText="name" />
-//     </ReferenceInput>,
-// ]
+const trackingFilters = [
+    <TextInput source="name" label="Search" alwaysOn />,
+    // <ReferenceInput source="trackingId" label="Name" reference="tracking" allowEmpty 
+    // >
+    //     <SelectInput optionText="name" />
+    // </ReferenceInput>,
+]
 
 export const TrackingList = (props) => {
     const isSmall = useMediaQuery(theme => theme.breakpoints.down('sm'));
     return (
-        <List  {...props}>
+        <List filters={trackingFilters} {...props}>
             {isSmall ? (
                 <SimpleList
                     primaryText={record => record.name}
