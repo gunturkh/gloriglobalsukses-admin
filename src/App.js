@@ -4,7 +4,7 @@ import { stringify } from "query-string";
 // import jsonServerProvider from "ra-data-json-server";
 // import { UserList } from "./users";
 // import { PostList, PostCreate, PostEdit } from "./posts";
-import { TrackingList, TrackingCreate, TrackingEdit } from "./components/tracking";
+import { TrackingList, TrackingCreate, TrackingEdit, TrackingShow } from "./components/tracking";
 import { Dashboard } from "./Dashboard";
 import authProvider from "./authProvider";
 import PostIcon from "@material-ui/icons/Book";
@@ -100,6 +100,7 @@ const App = () => {
         // edit={TrackingEdit}
         edit={TrackingEdit}
         icon={PostIcon}
+        show={TrackingShow}
       />
     </Admin>
   );
