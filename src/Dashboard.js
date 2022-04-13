@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader } from '@material-ui/core';
 import QRCode from "react-qr-code";
 
