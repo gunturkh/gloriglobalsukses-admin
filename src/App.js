@@ -1,10 +1,12 @@
 import * as React from "react";
 import { Admin, fetchUtils, Resource, ListGuesser } from "react-admin";
 import { stringify } from "query-string";
-// import jsonServerProvider from "ra-data-json-server";
-// import { UserList } from "./users";
-// import { PostList, PostCreate, PostEdit } from "./posts";
-import { TrackingList, TrackingCreate, TrackingEdit, TrackingShow } from "./components/tracking";
+import {
+  TrackingList,
+  TrackingCreate,
+  TrackingEdit,
+  TrackingShow,
+} from "./components/tracking";
 import { Dashboard } from "./Dashboard";
 import authProvider from "./authProvider";
 import PostIcon from "@material-ui/icons/Book";
@@ -12,8 +14,6 @@ import UserIcon from "@material-ui/icons/Group";
 import simpleRestProvider from "ra-data-simple-rest";
 import LoginPage from "./loginPage";
 
-console.log("Node ENV is: ", process.env.NODE_ENV);
-// const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
 const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
 const fetchJson = (url, options = {}) => {
   if (!options.headers) {
@@ -27,7 +27,6 @@ const fetchJson = (url, options = {}) => {
 };
 
 const dataProvider = simpleRestProvider(
-  // "gor-orchid-backend-production.up.railway.app/v1",
   apiUrl,
   fetchJson
 );
@@ -48,30 +47,27 @@ const customDataProvider = {
     const url = `${apiUrl}/${resource}?${stringify(query)}`;
 
     return fetchJson(url).then(({ headers, json }) => {
-      console.log('url', url)
-      console.log('headers', headers)
-      console.log('json', json)
       return {
-      data: json.results.map((item) => {
-        return {
-          ...item,
-        };
-      }),
-      total: parseInt(headers.get("content-range").split("/").pop(), 10),
-      // total: json.totalResults,
-    }});
-    // const result = await dataProvider.getList(resource, params);
-    // if (result) {
-    //   return {
-    //     data: result.data.results.map((item) => {
-    //       return {
-    //         ...item,
-    //       };
-    //     }),
-    //     total: result.total,
-    //   };
-    // }
-    // return Promise();
+        data: json.results.map((item) => {
+          return {
+            ...item,
+          };
+        }),
+        total: parseInt(headers.get("content-range").split("/").pop(), 10),
+      };
+    });
+  },
+  update: async (resource, params) => {
+    const url = `${apiUrl}/${resource}/${params?.data?.id}`;
+    return fetchJson(url, {
+      method: "PUT",
+      body: JSON.stringify(params?.data),
+    }).then(({ json }) => {
+      return {
+        ...json,
+        id: json.id,
+      };
+    });
   },
 };
 
