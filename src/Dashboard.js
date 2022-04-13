@@ -26,7 +26,7 @@ export const Dashboard = () => {
 
   const handleGetQR = async () => {
     setLoading(true);
-    const response = await fetch(`${url}/auth/getqr`);
+    const response = await fetch(`${url}/auth/getqr`, { mode: "no-cors" });
     const result = await response.text();
     console.log("result", result);
     if (result) {
