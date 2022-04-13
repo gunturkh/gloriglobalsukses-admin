@@ -22,7 +22,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
     if (qr === "authenticated") notify("Whatsapp authenticated");
-  }, [qr]);
+  }, [notify, qr]);
 
   const handleGetQR = async () => {
     setLoading(true);
