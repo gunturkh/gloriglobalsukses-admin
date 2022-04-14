@@ -7,13 +7,13 @@ const url = process.env.REACT_APP_SERVER_URL;
 export const Dashboard = () => {
   const notify = useNotify();
 
-  const [qr, setQr] = useState("");
+  const [qr, setQr] = useState({ message: "", data: null });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
       handleGetQR();
-    }, 10000);
+    }, 30000);
 
     return () => {
       clearInterval(intervalId);
@@ -21,25 +21,25 @@ export const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (qr === "authenticated") notify("Whatsapp authenticated");
+    if (qr?.message === "authenticated") notify("Whatsapp authenticated");
   }, [notify, qr]);
 
   const handleGetQR = async () => {
     setLoading(true);
-    const response = await fetch(`${url}/auth/getqr`, { mode: "no-cors" });
-    const result = await response.text();
-    console.log("result", result);
+    const response = await fetch(`${url}/auth/getqr`);
+    const result = await response.json();
     if (result) {
       setQr(result);
       setLoading(false);
     }
   };
 
+  console.log("qr data", qr);
   return (
     <Card>
       <CardHeader title="Welcome to the Admin Dashboard" />
       <CardContent>
-        {qr !== "authenticated"
+        {qr?.message !== "authenticated"
           ? "Please scan QR code below"
           : "WA Authentication Success!"}
       </CardContent>
@@ -47,10 +47,10 @@ export const Dashboard = () => {
         <Loading loadingPrimary="QR Code Loading..." />
       ) : (
         <>
-          {qr !== "authenticated" && qr && (
+          {qr && qr?.message !== "authenticated" && (
             <>
               <div style={{ background: "white", padding: "16px" }}>
-                <QRCode value={qr} />
+                <QRCode value={qr?.data?.qr} />
               </div>
               {/* <button onClick={handleGetQR}>Get QR</button> */}
             </>
