@@ -37,7 +37,7 @@ export const Dashboard = () => {
   console.log("qr data", qr);
   return (
     <Card>
-      <CardHeader title="Welcome to the Admin Dashboard" />
+      <CardHeader title="Welcome to Tracking Management System Dashboard" />
       <CardContent>
         {qr?.message !== "authenticated"
           ? "Please scan QR code below"

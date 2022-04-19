@@ -9,6 +9,8 @@ import {
   Edit,
   EditButton,
   List,
+  SelectField,
+  SelectInput,
   Show,
   ShowButton,
   SimpleForm,
@@ -25,7 +27,10 @@ const TrackingTitle = ({ record }) => {
   return <span>Tracking {record ? `"${record.title}"` : ""}</span>;
 };
 
-const trackingFilters = [<TextInput source="name" label="Search" alwaysOn />];
+const trackingFilters = [
+  <TextInput source="name" label="Search" alwaysOn />,
+  <TextInput label="resi" source="resi" defaultValue="GGS-00000001" />,
+];
 
 const TrackingBulkActionButtons = (props) => (
   <React.Fragment>
@@ -35,7 +40,7 @@ const TrackingBulkActionButtons = (props) => (
 
 const TrackingShowActions = ({ basePath, data, resource }) => {
   const handlePDFClick = async () => {
-      const {id} = data;
+    const { id } = data;
     const pdf = await fetch(
       `${process.env.REACT_APP_SERVER_URL}/tracking/getpdf/${id}`
     );
@@ -69,6 +74,14 @@ export const TrackingShow = (props) => {
         <TextField source="item" />
         <TextField source="resi" />
         <TextField source="status" />
+        <SelectField
+          source="label"
+          choices={[
+            { id: "retailgeneral", name: "Barang Retail/General" },
+            { id: "kids", name: "Barang Anak" },
+            { id: "cosmetic", name: "Cosmetic" },
+          ]}
+        />
         <DateField label="Date Created" source="createdAt" />
         <DateField label="Date Updated" source="updatedAt" />
       </SimpleShowLayout>
@@ -97,6 +110,24 @@ export const TrackingList = (props) => {
           <TextField source="item" />
           <TextField source="resi" />
           <ChipField source="status" />
+          <TextField source="salesOrder" title="so" />
+          <SelectField
+            source="label"
+            choices={[
+              { id: "retailgeneral", name: "Barang Retail/General" },
+              { id: "kids", name: "Barang Anak" },
+              { id: "cosmetic", name: "Cosmetic" },
+            ]}
+          />
+          <SelectField
+            source="delay"
+            choices={[
+              { id: true, name: "Yes" },
+              { id: false, name: "No" },
+            ]}
+          />
+          <DateField label="Date Created" source="createdAt" />
+          <DateField label="Date Updated" source="updatedAt" />
           <EditButton />
           <ShowButton />
         </Datagrid>
@@ -114,6 +145,22 @@ export const TrackingEdit = (props) => (
       <TextInput source="item" />
       <TextInput source="resi" />
       <TextInput source="status" />
+      <TextInput source="salesOrder" title="so" />
+      <SelectInput
+        source="label"
+        choices={[
+          { id: "retailgeneral", name: "Barang Retail/General" },
+          { id: "kids", name: "Barang Anak" },
+          { id: "cosmetic", name: "Cosmetic" },
+        ]}
+      />
+      <SelectInput
+        source="delay"
+        choices={[
+          { id: true, name: "Yes" },
+          { id: false, name: "No" },
+        ]}
+      />
     </SimpleForm>
   </Edit>
 );
@@ -127,6 +174,22 @@ export const TrackingCreate = (props) => (
       <TextInput source="item" />
       <TextInput source="resi" />
       <TextInput source="status" />
+      <TextInput source="salesOrder" title="so" />
+      <SelectInput
+        source="label"
+        choices={[
+          { id: "retailgeneral", name: "Barang Retail/General" },
+          { id: "kids", name: "Barang Anak" },
+          { id: "cosmetic", name: "Cosmetic" },
+        ]}
+      />
+      <SelectInput
+        source="delay"
+        choices={[
+          { id: true, name: "Yes" },
+          { id: false, name: "No" },
+        ]}
+      />
     </SimpleForm>
   </Create>
 );
