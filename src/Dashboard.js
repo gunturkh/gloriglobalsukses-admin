@@ -13,7 +13,7 @@ export const Dashboard = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       handleGetQR();
-    }, 30000);
+    }, 5000);
 
     return () => {
       clearInterval(intervalId);
@@ -34,11 +34,22 @@ export const Dashboard = () => {
     }
   };
 
+  const handleWALogout = async () => {
+    setLoading(true);
+    const response = await fetch(`${url}/auth/wa-logout`);
+    const result = await response.json();
+    if (result) {
+      // setQr(result);
+      setLoading(false);
+    }
+  };
+
   console.log("qr data", qr);
   return (
     <Card>
       <CardHeader title="Welcome to Tracking Management System Dashboard" />
       <CardContent>
+        <button onClick={handleWALogout}>Logout WA</button>
         {qr?.message !== "authenticated"
           ? "Please scan QR code below"
           : "WA Authentication Success!"}
@@ -52,7 +63,6 @@ export const Dashboard = () => {
               <div style={{ background: "white", padding: "16px" }}>
                 <QRCode value={qr?.data?.qr} />
               </div>
-              {/* <button onClick={handleGetQR}>Get QR</button> */}
             </>
           )}
         </>
