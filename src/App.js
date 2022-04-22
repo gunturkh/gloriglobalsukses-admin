@@ -13,11 +13,11 @@ import PostIcon from "@mui/icons-material/Book";
 import UserIcon from "@mui/icons-material/Group";
 import simpleRestProvider from "ra-data-simple-rest";
 import LoginPage from "./loginPage";
-import moment from 'moment'
+import moment from "moment";
 
 const user = localStorage.getItem("user");
-const {id: userId = ''} = JSON.parse(user) || {}; 
-console.log('userId', userId)
+const { id: userId = "" } = user ? JSON.parse(user) : {};
+console.log("userId", userId);
 const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
 const fetchJson = (url, options = {}) => {
   if (!options.headers) {
@@ -30,10 +30,7 @@ const fetchJson = (url, options = {}) => {
   return fetchUtils.fetchJson(url, options);
 };
 
-const dataProvider = simpleRestProvider(
-  apiUrl,
-  fetchJson
-);
+const dataProvider = simpleRestProvider(apiUrl, fetchJson);
 
 const customDataProvider = {
   ...dataProvider,
@@ -44,7 +41,7 @@ const customDataProvider = {
       sortBy: `${field}:${order.toLowerCase()}`,
       limit: perPage,
       page: page,
-      populate: 'user',
+      populate: "user",
       ...params.filter,
       // range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
       // filter: JSON.stringify(params.filter),
@@ -64,8 +61,17 @@ const customDataProvider = {
   },
   create: async (resource, params) => {
     const url = `${apiUrl}/${resource}`;
-    const modifiedSendMessageTimestamp = parseInt(moment(params.data.sendMessageTimestamp).format('x'), 10)
-    const modifiedData = {...params.data, user: userId, sendMessageTimestamp: modifiedSendMessageTimestamp, sendMessageStatus: false, read: true}
+    const modifiedSendMessageTimestamp = parseInt(
+      moment(params.data.sendMessageTimestamp).format("x"),
+      10
+    );
+    const modifiedData = {
+      ...params.data,
+      user: userId,
+      sendMessageTimestamp: modifiedSendMessageTimestamp,
+      sendMessageStatus: false,
+      read: true,
+    };
     return fetchJson(url, {
       method: "POST",
       body: JSON.stringify(modifiedData),
@@ -78,8 +84,17 @@ const customDataProvider = {
   },
   update: async (resource, params) => {
     const url = `${apiUrl}/${resource}/${params?.data?.id}`;
-    const modifiedSendMessageTimestamp = parseInt(moment(params.data.sendMessageTimestamp).format('x'), 10)
-    const modifiedData = {...params.data, user: userId, sendMessageTimestamp: modifiedSendMessageTimestamp, sendMessageStatus: false, read: true}
+    const modifiedSendMessageTimestamp = parseInt(
+      moment(params.data.sendMessageTimestamp).format("x"),
+      10
+    );
+    const modifiedData = {
+      ...params.data,
+      user: userId,
+      sendMessageTimestamp: modifiedSendMessageTimestamp,
+      sendMessageStatus: false,
+      read: true,
+    };
     return fetchJson(url, {
       method: "PUT",
       body: JSON.stringify(modifiedData),
