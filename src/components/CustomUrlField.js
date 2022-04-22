@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecordContext } from 'react-admin';
-import { makeStyles } from '@material-ui/core/styles'
-import LaunchIcon from '@material-ui/icons/Launch'
+import { makeStyles } from '@mui/styles'
+import LaunchIcon from '@mui/icons-material/Launch'
 
 const useStyles = makeStyles({
     link: {

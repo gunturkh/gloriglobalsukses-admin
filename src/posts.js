@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useMediaQuery } from '@material-ui/core';
+import { useMediaQuery } from '@mui/material';
 import {
     Create,
     Datagrid,

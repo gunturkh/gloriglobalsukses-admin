@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardContent, CardHeader } from "@material-ui/core";
+import { Card, CardContent, CardHeader } from "@mui/material";
 import { Loading, useNotify } from "react-admin";
 import QRCode from "react-qr-code";
 
@@ -34,22 +34,11 @@ export const Dashboard = () => {
     }
   };
 
-  const handleWALogout = async () => {
-    setLoading(true);
-    const response = await fetch(`${url}/auth/wa-logout`);
-    const result = await response.json();
-    if (result) {
-      // setQr(result);
-      setLoading(false);
-    }
-  };
-
   console.log("qr data", qr);
   return (
     <Card>
       <CardHeader title="Welcome to Tracking Management System Dashboard" />
       <CardContent>
-        <button onClick={handleWALogout}>Logout WA</button>
         {qr?.message !== "authenticated"
           ? "Please scan QR code below"
           : "WA Authentication Success!"}

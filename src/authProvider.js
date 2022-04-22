@@ -17,12 +17,13 @@ const authProvider = {
         }
         return response.json();
       })
-      .then(({ tokens }) => {
+      .then(({ tokens, user }) => {
         const { access } = tokens;
         const accessToken = access.token;
         // const refreshToken = refresh.token;
         // const decodedToken = decodeJwt(accessToken);
         localStorage.setItem("token", accessToken);
+        localStorage.setItem("user", JSON.stringify(user));
       })
       .catch(() => {
         throw new Error("Network error");
@@ -31,6 +32,7 @@ const authProvider = {
   // called when the user clicks on the logout button
   logout: () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     return Promise.resolve();
   },
   // called when the API returns an error

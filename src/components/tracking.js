@@ -1,14 +1,17 @@
 import * as React from "react";
-import { useMediaQuery } from "@material-ui/core";
+import { useMediaQuery } from "@mui/material";
 import {
   Button,
   ChipField,
   Create,
   Datagrid,
   DateField,
+  DateInput,
+  DateTimeInput,
   Edit,
   EditButton,
   List,
+  NumberInput,
   SelectField,
   SelectInput,
   Show,
@@ -21,15 +24,76 @@ import {
   TopToolbar,
 } from "react-admin";
 import BulkUpdateStatusButton from "./BulkUpdateStatusButton";
-import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
+import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import { FormDataConsumer } from "react-admin";
 
 const TrackingTitle = ({ record }) => {
   return <span>Tracking {record ? `"${record.title}"` : ""}</span>;
 };
 
 const trackingFilters = [
-  <TextInput source="name" label="Search" alwaysOn />,
-  <TextInput label="resi" source="resi" defaultValue="GGS-00000001" />,
+  <TextInput label="Resi" source="resi" />,
+  <TextInput label="Barang" source="item" />,
+  <TextInput label="No HP" source="phone" />,
+  <TextInput label="Alamat" source="address" />,
+  <TextInput label="SO" source="salesOrder" />,
+  <SelectInput
+    label="Status WA"
+    source="sendMessageStatus"
+    choices={[
+      { id: true, name: "Terkirim" },
+      { id: false, name: "Belum Terkirim" },
+    ]}
+  />,
+  <SelectInput
+    source="status"
+    choices={[
+      {
+        id: "SUDAH DIPESAN DAN BARANG READY",
+        name: "SUDAH DIPESAN DAN BARANG READY",
+      },
+      {
+        id: "SUDAH DIPESAN DAN BARANG PRODUKSI",
+        name: "SUDAH DIPESAN DAN BARANG PRODUKSI",
+      },
+      {
+        id: "SUDAH DIKIRIM VENDOR KE GUDANG CHINA",
+        name: "SUDAH DIKIRIM VENDOR KE GUDANG CHINA",
+      },
+      {
+        id: "SUDAH TIBA DIGUDANG CHINA",
+        name: "SUDAH TIBA DIGUDANG CHINA",
+      },
+      { id: "BARANG LOADING KE BATAM", name: "BARANG LOADING KE BATAM" },
+      {
+        id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+        name: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+      },
+      {
+        id: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+        name: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+      },
+      {
+        id: "DELAY - RANDOM CHECK CHINA",
+        name: "DELAY - RANDOM CHECK CHINA",
+      },
+    ]}
+  />,
+  <SelectInput
+    source="label"
+    choices={[
+      { id: "retailgeneral", name: "Barang Retail/General" },
+      { id: "kids", name: "Barang Anak" },
+      { id: "cosmetic", name: "Cosmetic" },
+    ]}
+  />,
+  <SelectInput
+    source="delay"
+    choices={[
+      { id: true, name: "Ya" },
+      { id: false, name: "Tidak" },
+    ]}
+  />,
 ];
 
 const TrackingBulkActionButtons = (props) => (
@@ -73,7 +137,40 @@ export const TrackingShow = (props) => {
         <TextField source="address" />
         <TextField source="item" />
         <TextField source="resi" />
-        <TextField source="status" />
+        <SelectField
+          source="status"
+          choices={[
+            {
+              id: "SUDAH DIPESAN DAN BARANG READY",
+              name: "SUDAH DIPESAN DAN BARANG READY",
+            },
+            {
+              id: "SUDAH DIPESAN DAN BARANG PRODUKSI",
+              name: "SUDAH DIPESAN DAN BARANG PRODUKSI",
+            },
+            {
+              id: "SUDAH DIKIRIM VENDOR KE GUDANG CHINA",
+              name: "SUDAH DIKIRIM VENDOR KE GUDANG CHINA",
+            },
+            {
+              id: "SUDAH TIBA DIGUDANG CHINA",
+              name: "SUDAH TIBA DIGUDANG CHINA",
+            },
+            { id: "BARANG LOADING KE BATAM", name: "BARANG LOADING KE BATAM" },
+            {
+              id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+              name: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+            },
+            {
+              id: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+              name: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+            },
+            {
+              id: "DELAY - RANDOM CHECK CHINA",
+              name: "DELAY - RANDOM CHECK CHINA",
+            },
+          ]}
+        />
         <SelectField
           source="label"
           choices={[
@@ -82,8 +179,16 @@ export const TrackingShow = (props) => {
             { id: "cosmetic", name: "Cosmetic" },
           ]}
         />
-        <DateField label="Date Created" source="createdAt" />
-        <DateField label="Date Updated" source="updatedAt" />
+        <DateField label="Waktu Kirim" source="sendMessageTimestamp" showTime />
+        <TextField label="Diedit oleh" source="user.name" />
+        <SelectField
+          source="sendMessageStatus"
+          label="Status WA"
+          choices={[
+            { id: true, name: "Terkirim" },
+            { id: false, name: "Belum Terkirim" },
+          ]}
+        />
       </SimpleShowLayout>
     </Show>
   );
@@ -91,6 +196,11 @@ export const TrackingShow = (props) => {
 
 export const TrackingList = (props) => {
   const isSmall = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  console.log("props", props);
+  const postRowStyle = (record, index) => ({
+    backgroundColor: record.read === false ? "rgba(0,0,0,0.2)" : "white",
+    color: record.read === false ? "black" : "white",
+  });
   return (
     <List
       filters={trackingFilters}
@@ -103,14 +213,14 @@ export const TrackingList = (props) => {
           secondaryText={(record) => `${record.resi}`}
         />
       ) : (
-        <Datagrid>
-          <TextField source="name" />
-          <TextField source="phone" />
-          <TextField source="address" />
-          <TextField source="item" />
-          <TextField source="resi" />
-          <ChipField source="status" />
-          <TextField source="salesOrder" title="so" />
+        <Datagrid rowStyle={postRowStyle}>
+          <TextField source="name" label="Nama" />
+          <TextField source="phone" label="No. HP" />
+          <TextField source="address" label="Alamat" />
+          <TextField source="item" label="Barang" />
+          <TextField source="resi" label="No Resi" />
+          <ChipField source="status" label="Status" />
+          <TextField source="salesOrder" label="No. SO" />
           <SelectField
             source="label"
             choices={[
@@ -126,8 +236,20 @@ export const TrackingList = (props) => {
               { id: false, name: "No" },
             ]}
           />
-          <DateField label="Date Created" source="createdAt" />
-          <DateField label="Date Updated" source="updatedAt" />
+          <DateField
+            label="Waktu Kirim"
+            source="sendMessageTimestamp"
+            showTime
+          />
+          <TextField label="Diedit oleh" source="user.name" />
+          <SelectField
+            source="sendMessageStatus"
+            label="Status WA"
+            choices={[
+              { id: true, name: "Terkirim" },
+              { id: false, name: "Belum Terkirim" },
+            ]}
+          />
           <EditButton />
           <ShowButton />
         </Datagrid>
@@ -144,8 +266,81 @@ export const TrackingEdit = (props) => (
       <TextInput source="address" />
       <TextInput source="item" />
       <TextInput source="resi" />
-      <TextInput source="status" />
-      <TextInput source="salesOrder" title="so" />
+      <SelectInput
+        source="status"
+        choices={[
+          {
+            id: "SUDAH DIPESAN DAN BARANG READY",
+            name: "SUDAH DIPESAN DAN BARANG READY",
+          },
+          {
+            id: "SUDAH DIPESAN DAN BARANG PRODUKSI",
+            name: "SUDAH DIPESAN DAN BARANG PRODUKSI",
+          },
+          {
+            id: "SUDAH DIKIRIM VENDOR KE GUDANG CHINA",
+            name: "SUDAH DIKIRIM VENDOR KE GUDANG CHINA",
+          },
+          {
+            id: "SUDAH TIBA DIGUDANG CHINA",
+            name: "SUDAH TIBA DIGUDANG CHINA",
+          },
+          { id: "BARANG LOADING KE BATAM", name: "BARANG LOADING KE BATAM" },
+          {
+            id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+            name: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+          },
+          {
+            id: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+            name: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+          },
+          {
+            id: "DELAY - RANDOM CHECK CHINA",
+            name: "DELAY - RANDOM CHECK CHINA",
+          },
+        ]}
+      />
+      <FormDataConsumer>
+        {({ formData, ...rest }) =>
+          formData.status === "BARANG LOADING KE BATAM" && (
+            <DateInput
+              source="estimatedDate"
+              label="Tanggal Perkiraan Barang Sampai"
+              {...rest}
+            />
+          )
+        }
+      </FormDataConsumer>
+      <FormDataConsumer>
+        {({ formData, ...rest }) =>
+          formData.status === "BARANG KOMPLIT ITEM & BELUM CLEAR DP" && (
+            <>
+              <DateInput
+                source="estimatedDate"
+                label="Tanggal Barang Sampai"
+                {...rest}
+              />
+              <NumberInput
+                source="remainingDownPaymentAmount"
+                label="Sisa DP"
+                {...rest}
+              />
+            </>
+          )
+        }
+      </FormDataConsumer>
+      <FormDataConsumer>
+        {({ formData, ...rest }) =>
+          formData.status === "BARANG KOMPLIT ITEM & SUDAH CLEAR DP" && (
+            <DateInput
+              source="estimatedDate"
+              label="Tanggal Barang Sampai"
+              {...rest}
+            />
+          )
+        }
+      </FormDataConsumer>
+      <TextInput source="salesOrder" title="Sales Order" />
       <SelectInput
         source="label"
         choices={[
@@ -160,36 +355,119 @@ export const TrackingEdit = (props) => (
           { id: true, name: "Yes" },
           { id: false, name: "No" },
         ]}
+      />
+      <DateTimeInput
+        source="sendMessageTimestamp"
+        label="Waktu Kirim Otomatis"
       />
     </SimpleForm>
   </Edit>
 );
 
-export const TrackingCreate = (props) => (
-  <Create {...props}>
-    <SimpleForm>
-      <TextInput source="name" />
-      <TextInput source="phone" />
-      <TextInput source="address" />
-      <TextInput source="item" />
-      <TextInput source="resi" />
-      <TextInput source="status" />
-      <TextInput source="salesOrder" title="so" />
-      <SelectInput
-        source="label"
-        choices={[
-          { id: "retailgeneral", name: "Barang Retail/General" },
-          { id: "kids", name: "Barang Anak" },
-          { id: "cosmetic", name: "Cosmetic" },
-        ]}
-      />
-      <SelectInput
-        source="delay"
-        choices={[
-          { id: true, name: "Yes" },
-          { id: false, name: "No" },
-        ]}
-      />
-    </SimpleForm>
-  </Create>
-);
+export const TrackingCreate = (props) => {
+  return (
+    <Create {...props}>
+      <SimpleForm>
+        <TextInput source="name" />
+        <TextInput source="phone" />
+        <TextInput source="address" />
+        <TextInput source="item" />
+        <TextInput source="resi" />
+        <SelectInput
+          source="status"
+          choices={[
+            {
+              id: "SUDAH DIPESAN DAN BARANG READY",
+              name: "SUDAH DIPESAN DAN BARANG READY",
+            },
+            {
+              id: "SUDAH DIPESAN DAN BARANG PRODUKSI",
+              name: "SUDAH DIPESAN DAN BARANG PRODUKSI",
+            },
+            {
+              id: "SUDAH DIKIRIM VENDOR KE GUDANG CHINA",
+              name: "SUDAH DIKIRIM VENDOR KE GUDANG CHINA",
+            },
+            {
+              id: "SUDAH TIBA DIGUDANG CHINA",
+              name: "SUDAH TIBA DIGUDANG CHINA",
+            },
+            { id: "BARANG LOADING KE BATAM", name: "BARANG LOADING KE BATAM" },
+            {
+              id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+              name: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+            },
+            {
+              id: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+              name: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+            },
+            {
+              id: "DELAY - RANDOM CHECK CHINA",
+              name: "DELAY - RANDOM CHECK CHINA",
+            },
+          ]}
+        />
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.status === "BARANG LOADING KE BATAM" && (
+              <DateInput
+                source="estimatedDate"
+                label="Tanggal Perkiraan Barang Sampai"
+                {...rest}
+              />
+            )
+          }
+        </FormDataConsumer>
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.status === "BARANG KOMPLIT ITEM & BELUM CLEAR DP" && (
+              <>
+                <DateInput
+                  source="estimatedDate"
+                  label="Tanggal Barang Sampai"
+                  {...rest}
+                />
+                <NumberInput
+                  source="remainingDownPaymentAmount"
+                  label="Sisa DP"
+                  {...rest}
+                />
+              </>
+            )
+          }
+        </FormDataConsumer>
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.status === "BARANG KOMPLIT ITEM & SUDAH CLEAR DP" && (
+              <DateInput
+                source="estimatedDate"
+                label="Tanggal Barang Sampai"
+                {...rest}
+              />
+            )
+          }
+        </FormDataConsumer>
+        <TextInput source="salesOrder" title="so" />
+        <SelectInput
+          source="label"
+          choices={[
+            { id: "retailgeneral", name: "Barang Retail/General" },
+            { id: "kids", name: "Barang Anak" },
+            { id: "cosmetic", name: "Cosmetic" },
+          ]}
+        />
+        <SelectInput
+          source="delay"
+          choices={[
+            { id: true, name: "Yes" },
+            { id: false, name: "No" },
+          ]}
+        />
+        <DateTimeInput
+          source="sendMessageTimestamp"
+          label="Waktu Kirim Otomatis"
+        />
+      </SimpleForm>
+    </Create>
+  );
+};
