@@ -16,7 +16,7 @@ import LoginPage from "./loginPage";
 import moment from 'moment'
 
 const user = localStorage.getItem("user");
-const {id: userId} = JSON.parse(user); 
+const {id: userId = ''} = JSON.parse(user) || {}; 
 console.log('userId', userId)
 const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
 const fetchJson = (url, options = {}) => {
