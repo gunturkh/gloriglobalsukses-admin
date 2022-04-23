@@ -15,9 +15,6 @@ import simpleRestProvider from "ra-data-simple-rest";
 import LoginPage from "./loginPage";
 import moment from "moment";
 
-const user = localStorage.getItem("user");
-const { id: userId = "" } = user ? JSON.parse(user) : {};
-console.log("userId", userId);
 const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
 const fetchJson = (url, options = {}) => {
   if (!options.headers) {
@@ -60,6 +57,9 @@ const customDataProvider = {
     });
   },
   create: async (resource, params) => {
+    const user = localStorage.getItem("user");
+    const { id: userId = "" } = user ? JSON.parse(user) : {};
+    console.log("userId", userId);
     const url = `${apiUrl}/${resource}`;
     const modifiedSendMessageTimestamp = parseInt(
       moment(params.data.sendMessageTimestamp).format("x"),
@@ -83,6 +83,9 @@ const customDataProvider = {
     });
   },
   update: async (resource, params) => {
+    const user = localStorage.getItem("user");
+    const { id: userId = "" } = user ? JSON.parse(user) : {};
+    console.log("userId", userId);
     const url = `${apiUrl}/${resource}/${params?.data?.id}`;
     const modifiedSendMessageTimestamp = parseInt(
       moment(params.data.sendMessageTimestamp).format("x"),
