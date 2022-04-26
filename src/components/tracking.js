@@ -180,6 +180,23 @@ export const TrackingShow = (props) => {
           ]}
         />
         <DateField label="Waktu Kirim" source="sendMessageTimestamp" showTime />
+        <SelectField
+          source="delay"
+          choices={[
+            { id: true, name: "Yes" },
+            { id: false, name: "No" },
+          ]}
+        />
+        <DateField source="customerOrderDate" label="Tanggal Customer Order" />
+        <DateField
+          source="daysToSendReminderFromCustomerOrderDate"
+          label="Jumlah hari pengingat otomatis dari tanggal customer order"
+          helperText="Masukkan Jumlah hari pengingat otomatis dari tanggal customer order"
+        />
+        <DateField
+          source="orderArrivedToWarehouseDate"
+          label="Tanggal Terima Gudang"
+        />
         <TextField label="Diedit oleh" source="user.name" />
         <SelectField
           source="sendMessageStatus"
@@ -221,6 +238,14 @@ export const TrackingList = (props) => {
           <TextField source="resi" label="No Resi" />
           <ChipField source="status" label="Status" />
           <TextField source="salesOrder" label="No. SO" />
+          <DateField
+            source="customerOrderDate"
+            label="Tanggal Customer Order"
+          />
+          <DateField
+            source="orderArrivedToWarehouseDate"
+            label="Tanggal Terima Gudang"
+          />
           <SelectField
             source="label"
             choices={[
@@ -261,11 +286,11 @@ export const TrackingList = (props) => {
 export const TrackingEdit = (props) => (
   <Edit title={<TrackingTitle />} {...props}>
     <SimpleForm>
-      <TextInput source="name" />
-      <TextInput source="phone" />
-      <TextInput source="address" />
-      <TextInput source="item" />
-      <TextInput source="resi" />
+      <TextInput source="name" label="Nama" />
+      <TextInput source="phone" label="No HP" />
+      <TextInput source="address" label="Alamat" />
+      <TextInput source="item" label="Barang" />
+      <TextInput source="resi" label="No Resi" />
       <SelectInput
         source="status"
         choices={[
@@ -300,6 +325,17 @@ export const TrackingEdit = (props) => (
           },
         ]}
       />
+      <FormDataConsumer>
+        {({ formData, ...rest }) =>
+          formData.status === "SUDAH DIPESAN DAN BARANG PRODUKSI" && (
+            <NumberInput
+              source="productionDays"
+              label="Jumlah hari barang diproduksi"
+              {...rest}
+            />
+          )
+        }
+      </FormDataConsumer>
       <FormDataConsumer>
         {({ formData, ...rest }) =>
           formData.status === "BARANG LOADING KE BATAM" && (
@@ -349,6 +385,16 @@ export const TrackingEdit = (props) => (
           { id: "cosmetic", name: "Cosmetic" },
         ]}
       />
+      <DateInput source="customerOrderDate" label="Tanggal Customer Order" />
+      <DateInput
+        source="daysToSendReminderFromCustomerOrderDate"
+        label="Jumlah hari pengingat otomatis dari tanggal customer order"
+        helperText="Masukkan Jumlah hari pengingat otomatis dari tanggal customer order"
+      />
+      <DateInput
+        source="orderArrivedToWarehouseDate"
+        label="Tanggal Terima Gudang"
+      />
       <SelectInput
         source="delay"
         choices={[
@@ -368,11 +414,11 @@ export const TrackingCreate = (props) => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <TextInput source="name" />
-        <TextInput source="phone" />
-        <TextInput source="address" />
-        <TextInput source="item" />
-        <TextInput source="resi" />
+        <TextInput source="name" label="Nama" />
+        <TextInput source="phone" label="No HP" />
+        <TextInput source="address" label="Alamat" />
+        <TextInput source="item" label="Barang" />
+        <TextInput source="resi" label="No Resi" />
         <SelectInput
           source="status"
           choices={[
@@ -407,6 +453,17 @@ export const TrackingCreate = (props) => {
             },
           ]}
         />
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.status === "SUDAH DIPESAN DAN BARANG PRODUKSI" && (
+              <NumberInput
+                source="productionDays"
+                label="Jumlah hari barang diproduksi"
+                {...rest}
+              />
+            )
+          }
+        </FormDataConsumer>
         <FormDataConsumer>
           {({ formData, ...rest }) =>
             formData.status === "BARANG LOADING KE BATAM" && (
@@ -455,6 +512,16 @@ export const TrackingCreate = (props) => {
             { id: "kids", name: "Barang Anak" },
             { id: "cosmetic", name: "Cosmetic" },
           ]}
+        />
+        <DateInput source="customerOrderDate" label="Tanggal Customer Order" />
+        <DateInput
+          source="daysToSendReminderFromCustomerOrderDate"
+          label="Jumlah hari pengingat otomatis dari tanggal customer order"
+          helperText="Masukkan Jumlah hari pengingat otomatis dari tanggal customer order"
+        />
+        <DateInput
+          source="orderArrivedToWarehouseDate"
+          label="Tanggal Terima Gudang"
         />
         <SelectInput
           source="delay"
