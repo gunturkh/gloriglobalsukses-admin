@@ -71,13 +71,13 @@ const trackingFilters = [
       { id: "cosmetic", name: "Cosmetic" },
     ]}
   />,
-  <SelectInput
-    source="delay"
-    choices={[
-      { id: true, name: "Ya" },
-      { id: false, name: "Tidak" },
-    ]}
-  />,
+  // <SelectInput
+  //   source="delay"
+  //   choices={[
+  //     { id: true, name: "Ya" },
+  //     { id: false, name: "Tidak" },
+  //   ]}
+  // />,
 ];
 
 const TrackingBulkActionButtons = (props) => (

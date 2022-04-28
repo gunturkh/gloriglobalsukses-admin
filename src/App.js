@@ -65,12 +65,29 @@ const customDataProvider = {
       moment(params.data.sendMessageTimestamp).format("x"),
       10
     );
+    const modifiedDaysToSendReminderTimestamp = parseInt(
+      moment()
+        // use days for production, and minutes for development
+        .add("days", params.data.daysToSendReminder)
+        // .add("minutes", params.data.daysToSendReminder)
+        .format("x"),
+      10
+    );
+    console.log({
+      now: parseInt(moment().format("x"), 10),
+      added: modifiedDaysToSendReminderTimestamp,
+    });
+    const includeDaysToSendReminder = params?.data?.setSendMessageNow && {
+      daysToSendReminder: params?.data?.daysToSendReminder,
+    };
     const modifiedData = {
       ...params.data,
       user: userId,
       sendMessageTimestamp: modifiedSendMessageTimestamp,
       sendMessageStatus: false,
       read: true,
+      daysToSendReminderTimestamp: modifiedDaysToSendReminderTimestamp,
+      ...includeDaysToSendReminder,
     };
     return fetchJson(url, {
       method: "POST",
@@ -91,12 +108,29 @@ const customDataProvider = {
       moment(params.data.sendMessageTimestamp).format("x"),
       10
     );
+    const modifiedDaysToSendReminderTimestamp = parseInt(
+      moment()
+        // use days for production, and minutes for development
+        .add("days", params.data.daysToSendReminder)
+        // .add("minutes", params.data.daysToSendReminder)
+        .format("x"),
+      10
+    );
+    console.log({
+      now: parseInt(moment().format("x"), 10),
+      added: modifiedDaysToSendReminderTimestamp,
+    });
+    const includeDaysToSendReminder = params?.data?.setSendMessageNow && {
+      daysToSendReminder: params?.data?.daysToSendReminder,
+    };
     const modifiedData = {
       ...params.data,
       user: userId,
       sendMessageTimestamp: modifiedSendMessageTimestamp,
       sendMessageStatus: false,
       read: true,
+      daysToSendReminderTimestamp: modifiedDaysToSendReminderTimestamp,
+      ...includeDaysToSendReminder,
     };
     return fetchJson(url, {
       method: "PUT",
