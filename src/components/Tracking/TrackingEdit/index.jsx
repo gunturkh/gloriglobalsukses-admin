@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { Box } from "@mui/system";
 import moment from "moment";
 import {
@@ -17,7 +17,7 @@ import {
   Toolbar,
   useRecordContext,
 } from "react-admin";
-import { Aside } from "./Aside";
+// import { Aside } from "./Aside";
 
 const TrackingTitle = ({ record }) => {
   return <span>Tracking {record ? `"${record.title}"` : ""}</span>;

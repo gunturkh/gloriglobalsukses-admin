@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Admin, fetchUtils, Resource, ListGuesser } from "react-admin";
+import { Admin, fetchUtils, Resource } from "react-admin";
 import { stringify } from "query-string";
 import {
   TrackingList,
@@ -10,7 +10,6 @@ import {
 import { Dashboard } from "./Dashboard";
 import authProvider from "./authProvider";
 import PostIcon from "@mui/icons-material/Book";
-import UserIcon from "@mui/icons-material/Group";
 import simpleRestProvider from "ra-data-simple-rest";
 import LoginPage from "./loginPage";
 import moment from "moment";
