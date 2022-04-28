@@ -6,7 +6,7 @@ import {
   TrackingCreate,
   TrackingEdit,
   TrackingShow,
-} from "./components/tracking";
+} from "./components/Tracking";
 import { Dashboard } from "./Dashboard";
 import authProvider from "./authProvider";
 import PostIcon from "@mui/icons-material/Book";
@@ -127,7 +127,7 @@ const App = () => {
         icon={PostIcon}
       /> */}
       {/* <Resource name="users" list={UserList} icon={UserIcon} /> */}
-      <Resource name="users" list={ListGuesser} icon={UserIcon} />
+      {/* <Resource name="users" list={ListGuesser} icon={UserIcon} /> */}
       <Resource
         name="tracking"
         list={TrackingList}
