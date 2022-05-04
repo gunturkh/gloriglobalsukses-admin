@@ -15,7 +15,7 @@ export const Dashboard = () => {
   const checkSavedQR = Object.keys(parsedQRFromSessionStorage).length > 0
   const [socketData, setSocketData] = useState({ message: "", data: "" });
   const [socketClientData, setSocketClientData] = useState(JSON.parse(sessionStorage.getItem('clientInfo')));
-  const [_, setQr] = useState({ message: "", data: "" });
+  const [qr, setQr] = useState({ message: "", data: "" });
   const [clientInfo, setClientInfo] = useState(parsedClientInfoFromSessionStorage);
   const [loading, setLoading] = useState(checkSavedQR ? false : true);
 
@@ -38,6 +38,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
     setQr(socketData);
+    console.log('qr data', qr)
   }, [socketData]);
 
   useEffect(() => {
