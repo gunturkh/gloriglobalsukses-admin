@@ -39,7 +39,7 @@ export const Dashboard = () => {
   useEffect(() => {
     setQr(socketData);
     console.log('qr data', qr)
-  }, [socketData]);
+  }, [socketData, qr]);
 
   useEffect(() => {
     setClientInfo(socketClientData);
