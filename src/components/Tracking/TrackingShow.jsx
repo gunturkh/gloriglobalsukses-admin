@@ -1,3 +1,4 @@
+import { Fragment, useState } from "react";
 import {
   Button,
   DateField,
@@ -9,26 +10,22 @@ import {
   TextField,
   TopToolbar,
 } from "react-admin";
+import { useParams } from 'react-router-dom';
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import MaterialButton from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import MUITextField from "@mui/material/TextField";
 
-const TrackingShowActions = ({ basePath, data, resource }) => {
-  const handlePDFClick = async () => {
-    const { id } = data;
-    const pdf = await fetch(
-      `${process.env.REACT_APP_SERVER_URL}/tracking/getpdf/${id}`
-    );
-    const blob = await pdf.blob();
-    const file = new Blob([blob], { type: "application/pdf" });
-    //Build a URL from the file
-    const fileURL = URL.createObjectURL(file);
-    //Open the URL on new Window
-    window.open(fileURL);
-  };
+const TrackingShowActions = ({ basePath, data, resource, handleClick }) => {
   return (
     <TopToolbar>
       <EditButton basePath={basePath} record={data} />
       <Button
-        onClick={handlePDFClick}
+        // onClick={handlePDFClick}
+        onClick={handleClick}
         icon={<PictureAsPdfIcon />}
         label="Export to PDF"
       />
@@ -37,9 +34,47 @@ const TrackingShowActions = ({ basePath, data, resource }) => {
 };
 
 export const TrackingShow = (props) => {
-  //   const record = useListController(props);
+  const { id } = useParams()
+  const [open, setOpen] = useState(false);
+  const [pageCount, setPageCount] = useState(1);
+
+  const handleClick = () => setOpen(true);
+  const handleDialogClose = () => setOpen(false);
+
+  const handleConfirm = async () => {
+    console.log('confirm')
+    // const { id } = data;
+    const pdf = await fetch(
+      `${process.env.REACT_APP_SERVER_URL}/tracking/getpdf/${id}/${pageCount}`
+    );
+    const blob = await pdf.blob();
+    const file = new Blob([blob], { type: "application/pdf" });
+    //Build a URL from the file
+    const fileURL = URL.createObjectURL(file);
+    //Open the URL on new Window
+    window.open(fileURL);
+  };
+
   return (
-    <Show actions={<TrackingShowActions />} {...props}>
+    <Show actions={<TrackingShowActions handleClick={handleClick} />} {...props}>
+      <Dialog onClose={handleDialogClose} open={open}>
+        <DialogTitle>Jumlah Halaman</DialogTitle>
+        <DialogContent>
+          <MUITextField
+            style={{ padding: "10px" }}
+            defaultValue={1}
+            min={1}
+            type='number'
+            name={"pageCount"}
+            // label={"Jumlah Halaman"}
+            onChange={(e) => setPageCount(e.target.value)}
+            required={true}
+          />
+        </DialogContent>
+        <DialogActions>
+          <MaterialButton onClick={handleConfirm}>Submit</MaterialButton>
+        </DialogActions>
+      </Dialog>
       <SimpleShowLayout>
         <TextField source="name" />
         <TextField source="phone" />
