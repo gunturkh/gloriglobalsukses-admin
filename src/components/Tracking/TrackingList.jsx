@@ -89,7 +89,7 @@ const TrackingBulkActionButtons = (props) => (
 export const TrackingList = (props) => {
   const isSmall = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   console.log("props", props);
-  const postRowStyle = (record, index) => ({
+  const postRowStyle = (record) => ({
     backgroundColor: record.read === false ? "rgba(0,0,0,0.2)" : "white",
     color: record.read === false ? "black" : "white",
   });

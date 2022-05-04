@@ -1,4 +1,5 @@
 import * as React from "react";
+// import { theme } from './theme'
 import { Admin, fetchUtils, Resource } from "react-admin";
 import { stringify } from "query-string";
 import {
@@ -151,6 +152,7 @@ const App = () => {
       dashboard={Dashboard}
       dataProvider={customDataProvider}
       loginPage={LoginPage}
+    // theme={theme}
     >
       {/* <Resource
         name="posts"
