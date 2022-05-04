@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import {
   Button,
   DateField,
@@ -19,7 +19,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import MUITextField from "@mui/material/TextField";
 
-const TrackingShowActions = ({ basePath, data, resource, handleClick }) => {
+const TrackingShowActions = ({ basePath, data, handleClick }) => {
   return (
     <TopToolbar>
       <EditButton basePath={basePath} record={data} />
