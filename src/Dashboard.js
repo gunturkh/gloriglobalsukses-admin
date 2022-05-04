@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader } from "@mui/material";
-import { Button, inferTypeFromValues, Loading, useNotify } from "react-admin";
+import { Loading } from "react-admin";
 import QRCode from "react-qr-code";
 import socketIOClient from "socket.io-client";
 
 const url = process.env.REACT_APP_SERVER_URL;
 const SOCKET_ENDPOINT = process.env.REACT_APP_SOCKET_ENDPOINT || "http://127.0.0.1:4001";
 export const Dashboard = () => {
-  const notify = useNotify();
+  // const notify = useNotify();
 
   const parsedClientInfoFromSessionStorage = JSON.parse(sessionStorage.getItem('clientInfo')) || {}
   const parsedQRFromSessionStorage = JSON.parse(sessionStorage.getItem('qr')) || {}
@@ -15,7 +15,7 @@ export const Dashboard = () => {
   const checkSavedQR = Object.keys(parsedQRFromSessionStorage).length > 0
   const [socketData, setSocketData] = useState({ message: "", data: "" });
   const [socketClientData, setSocketClientData] = useState(JSON.parse(sessionStorage.getItem('clientInfo')));
-  const [qr, setQr] = useState({ message: "", data: "" });
+  const [_, setQr] = useState({ message: "", data: "" });
   const [clientInfo, setClientInfo] = useState(parsedClientInfoFromSessionStorage);
   const [loading, setLoading] = useState(checkSavedQR ? false : true);
 
@@ -36,16 +36,6 @@ export const Dashboard = () => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     handleGetQR();
-  //   }, 5000);
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, []);
-
   useEffect(() => {
     setQr(socketData);
   }, [socketData]);
@@ -53,16 +43,6 @@ export const Dashboard = () => {
   useEffect(() => {
     setClientInfo(socketClientData);
   }, [socketClientData]);
-
-  const handleGetQR = async () => {
-    setLoading(true);
-    const response = await fetch(`${url}/auth/getqr`);
-    const result = await response.json();
-    if (result) {
-      setQr(result);
-      setLoading(false);
-    }
-  };
 
   const handleWALogout = async () => {
     setLoading(true);
