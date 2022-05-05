@@ -5,18 +5,18 @@ import QRCode from "react-qr-code";
 import socketIOClient from "socket.io-client";
 
 const url = process.env.REACT_APP_SERVER_URL;
-const SOCKET_ENDPOINT = process.env.REACT_APP_SOCKET_ENDPOINT || "http://127.0.0.1:4001";
+const SOCKET_ENDPOINT = process.env.REACT_APP_SOCKET_ENDPOINT || "http://127.0.0.1:4000";
 export const Dashboard = () => {
   // const notify = useNotify();
 
-  const parsedClientInfoFromSessionStorage = JSON.parse(sessionStorage.getItem('clientInfo')) || {}
-  const parsedQRFromSessionStorage = JSON.parse(sessionStorage.getItem('qr')) || {}
-  const checkSavedClientInfo = Object.keys(parsedClientInfoFromSessionStorage).length > 0
-  const checkSavedQR = Object.keys(parsedQRFromSessionStorage).length > 0
+  const parsedClientInfoFromLocalStorage = JSON.parse(localStorage.getItem('clientInfo')) || {}
+  const parsedQRFromLocalStorage = JSON.parse(localStorage.getItem('qr')) || {}
+  const checkSavedClientInfo = Object.keys(parsedClientInfoFromLocalStorage).length > 0
+  const checkSavedQR = Object.keys(parsedQRFromLocalStorage).length > 0
   const [socketData, setSocketData] = useState({ message: "", data: "" });
-  const [socketClientData, setSocketClientData] = useState(JSON.parse(sessionStorage.getItem('clientInfo')));
+  const [socketClientData, setSocketClientData] = useState(JSON.parse(localStorage.getItem('clientInfo')));
   const [qr, setQr] = useState({ message: "", data: "" });
-  const [clientInfo, setClientInfo] = useState(parsedClientInfoFromSessionStorage);
+  const [clientInfo, setClientInfo] = useState(parsedClientInfoFromLocalStorage);
   const [loading, setLoading] = useState(checkSavedQR ? false : true);
 
   useEffect(() => {
@@ -24,11 +24,12 @@ export const Dashboard = () => {
     socket.on("FromAPI", (data) => {
       setLoading(false);
       setSocketData(data);
-      sessionStorage.setItem('qr', JSON.stringify(data))
+      localStorage.setItem('qr', JSON.stringify(data))
     });
     socket.on("ClientInfo", (data) => {
       setSocketClientData(data);
-      sessionStorage.setItem('clientInfo', JSON.stringify(data))
+      console.log('ClientInfo from socket ', data)
+      localStorage.setItem('clientInfo', JSON.stringify(data))
     });
 
     return () => {
@@ -50,8 +51,8 @@ export const Dashboard = () => {
     const response = await fetch(`${url}/auth/wa-logout`);
     const result = await response.json();
     if (result) {
-      await sessionStorage.removeItem('clientInfo')
-      await sessionStorage.removeItem('qr')
+      localStorage.removeItem('clientInfo')
+      localStorage.removeItem('qr')
       setSocketClientData({})
       setClientInfo({})
     }
@@ -84,7 +85,7 @@ export const Dashboard = () => {
           {checkSavedQR && !checkSavedClientInfo && (
             <>
               <div style={{ background: "white", padding: "16px" }}>
-                <QRCode value={parsedQRFromSessionStorage?.data} />
+                <QRCode value={parsedQRFromLocalStorage?.data} />
               </div>
             </>
           )}

@@ -132,11 +132,11 @@ export const TrackingShow = (props) => {
           ]}
         /> */}
         <DateField source="customerOrderDate" label="Tanggal Customer Order" />
-        <NumberField
-          source="daysToSendReminderFromCustomerOrderDate"
-          label="Jumlah hari pengingat otomatis dari tanggal customer order"
-          helperText="Masukkan Jumlah hari pengingat otomatis dari tanggal customer order"
-        />
+        {/* <NumberField */}
+        {/*   source="daysToSendReminder" */}
+        {/*   label="Jumlah hari pengingat otomatis dari tanggal customer order" */}
+        {/*   helperText="Masukkan Jumlah hari pengingat otomatis dari tanggal customer order" */}
+        {/* /> */}
         <DateField
           source="orderArrivedToWarehouseDate"
           label="Tanggal Terima Gudang"
