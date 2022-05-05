@@ -3,7 +3,6 @@ import {
   Button,
   DateField,
   EditButton,
-  NumberField,
   SelectField,
   Show,
   SimpleShowLayout,
