@@ -19,9 +19,13 @@ import DialogActions from "@mui/material/DialogActions";
 import MUITextField from "@mui/material/TextField";
 
 const TrackingShowActions = ({ basePath, data, handleClick }) => {
+  const parsedClientInfoFromLocalStorage = JSON.parse(localStorage.getItem('clientInfo')) || {}
+  const checkSavedClientInfo = Object.keys(parsedClientInfoFromLocalStorage).length > 0
   return (
     <TopToolbar>
-      <EditButton basePath={basePath} record={data} />
+      {checkSavedClientInfo &&
+        <EditButton basePath={basePath} record={data} />
+      }
       <Button
         // onClick={handlePDFClick}
         onClick={handleClick}

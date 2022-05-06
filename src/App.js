@@ -14,6 +14,7 @@ import PostIcon from "@mui/icons-material/Book";
 import simpleRestProvider from "ra-data-simple-rest";
 import LoginPage from "./loginPage";
 import moment from "moment";
+import { daysToSendReminderDefaultValue } from './utils.js'
 
 const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
 const fetchJson = (url, options = {}) => {
@@ -65,11 +66,16 @@ const customDataProvider = {
       moment(params.data.sendMessageTimestamp).format("x"),
       10
     );
+    const includeDaysToSendReminder = params?.data?.setSendMessageNow && {
+      daysToSendReminder: daysToSendReminderDefaultValue(params?.data),
+    };
+    console.log('daysToSendReminder', daysToSendReminderDefaultValue(params?.data))
     const modifiedDaysToSendReminderTimestamp = parseInt(
       moment()
         // use days for production, and minutes for development
-        .add("days", params.data.daysToSendReminder)
+        .add("days", daysToSendReminderDefaultValue(params?.data))
         // .add("minutes", params.data.daysToSendReminder)
+        .startOf('day')
         .format("x"),
       10
     );
@@ -77,9 +83,9 @@ const customDataProvider = {
       now: parseInt(moment().format("x"), 10),
       added: modifiedDaysToSendReminderTimestamp,
     });
-    const includeDaysToSendReminder = params?.data?.setSendMessageNow && {
-      daysToSendReminder: params?.data?.daysToSendReminder,
-    };
+    delete params.data.daysToSendReminder
+    if (params?.data?.productionDays === '' && params?.data?.status !== 'SUDAH DIPESAN DAN BARANG PRODUKSI') delete params.data.productionDays
+    console.log('params.data after delete daysToSendReminder', params?.data)
     const modifiedData = {
       ...params.data,
       user: userId,
@@ -89,6 +95,7 @@ const customDataProvider = {
       daysToSendReminderTimestamp: modifiedDaysToSendReminderTimestamp,
       ...includeDaysToSendReminder,
     };
+    console.log('create data', modifiedData)
     return fetchJson(url, {
       method: "POST",
       body: JSON.stringify(modifiedData),
@@ -108,11 +115,16 @@ const customDataProvider = {
       moment(params.data.sendMessageTimestamp).format("x"),
       10
     );
+    const includeDaysToSendReminder = params?.data?.setSendMessageNow && {
+      daysToSendReminder: daysToSendReminderDefaultValue(params?.data),
+    };
+    console.log('daysToSendReminder', daysToSendReminderDefaultValue(params?.data))
     const modifiedDaysToSendReminderTimestamp = parseInt(
       moment()
         // use days for production, and minutes for development
-        .add("days", params.data.daysToSendReminder)
+        .add("days", daysToSendReminderDefaultValue(params?.data))
         // .add("minutes", params.data.daysToSendReminder)
+        .startOf('day')
         .format("x"),
       10
     );
@@ -120,9 +132,9 @@ const customDataProvider = {
       now: parseInt(moment().format("x"), 10),
       added: modifiedDaysToSendReminderTimestamp,
     });
-    const includeDaysToSendReminder = params?.data?.setSendMessageNow && {
-      daysToSendReminder: params?.data?.daysToSendReminder,
-    };
+    delete params.data.daysToSendReminder
+    if (params?.data?.productionDays === '' && params?.data?.status !== 'SUDAH DIPESAN DAN BARANG PRODUKSI') delete params.data.productionDays
+    console.log('params.data after delete daysToSendReminder', params?.data)
     const modifiedData = {
       ...params.data,
       user: userId,
@@ -146,6 +158,9 @@ const customDataProvider = {
 
 const App = () => {
   // return <Admin authProvider={authProvider} dashboard={Dashboard} dataProvider={dataProvider} >
+  const parsedClientInfoFromLocalStorage = JSON.parse(localStorage.getItem('clientInfo')) || {}
+  const checkSavedClientInfo = Object.keys(parsedClientInfoFromLocalStorage).length > 0
+  console.log('checkSavedClientInfo', checkSavedClientInfo)
   return (
     <Admin
       authProvider={authProvider}
@@ -166,9 +181,8 @@ const App = () => {
       <Resource
         name="tracking"
         list={TrackingList}
-        create={TrackingCreate}
-        // edit={TrackingEdit}
-        edit={TrackingEdit}
+        create={checkSavedClientInfo ? TrackingCreate : null}
+        edit={checkSavedClientInfo ? TrackingEdit : null}
         icon={PostIcon}
         show={TrackingShow}
       />

@@ -25,11 +25,14 @@ export const Dashboard = () => {
       setLoading(false);
       setSocketData(data);
       localStorage.setItem('qr', JSON.stringify(data))
+      localStorage.removeItem('clientInfo')
     });
     socket.on("ClientInfo", (data) => {
       setSocketClientData(data);
+      setLoading(false);
       console.log('ClientInfo from socket ', data)
       localStorage.setItem('clientInfo', JSON.stringify(data))
+      localStorage.removeItem('qr')
     });
 
     return () => {
@@ -47,17 +50,22 @@ export const Dashboard = () => {
   }, [socketClientData]);
 
   const handleWALogout = async () => {
+    const socket = socketIOClient(SOCKET_ENDPOINT);
+    socket.emit('logout', true)
     setLoading(true);
+    localStorage.removeItem('clientInfo')
+    localStorage.removeItem('qr')
+    setSocketClientData({})
+    setClientInfo({})
+    socket.disconnect();
     const response = await fetch(`${url}/auth/wa-logout`);
     const result = await response.json();
-    if (result) {
-      localStorage.removeItem('clientInfo')
-      localStorage.removeItem('qr')
-      setSocketClientData({})
-      setClientInfo({})
-    }
+    console.log('wa logout result', result)
+    // if (result) {
+    // }
   };
 
+  console.log('loading', loading)
   return (
     <Card sx={{ height: '100%' }}>
       <CardHeader title="Welcome to Tracking Management System Dashboard" />

@@ -13,6 +13,7 @@ import {
   TextInput,
 } from "react-admin";
 import { FormDataConsumer } from "react-admin";
+import { daysToSendReminderDefaultValue } from '../../utils'
 
 export const TrackingCreate = (props) => {
   return (
@@ -93,6 +94,9 @@ export const TrackingCreate = (props) => {
                         <SelectInput
                           fullWidth
                           source="status"
+                          helperText={`Sistem akan mereset warna data tracking pada tanggal ${moment()
+                            .add(daysToSendReminderDefaultValue(formData), "days").startOf('day')
+                            .format("DD MMM YYYY HH:mm a")} (${daysToSendReminderDefaultValue(formData)} hari dari sekarang)`}
                           choices={[
                             {
                               id: "SUDAH DIPESAN DAN BARANG READY",
@@ -167,6 +171,7 @@ export const TrackingCreate = (props) => {
                           fullWidth
                           source="productionDays"
                           label="Jumlah hari barang diproduksi"
+                          required
                           {...rest}
                         />
                       </Grid>
@@ -237,8 +242,8 @@ export const TrackingCreate = (props) => {
                         <NumberInput
                           fullWidth
                           helperText={`Sistem akan mereset warna data tracking pada tanggal ${moment()
-                            .add(formData.daysToSendReminder, "days")
-                            .format("DD MMM YYYY")}`}
+                            .add(formData.daysToSendReminder, "days").startOf('day')
+                            .format("DD MMM YYYY HH:mm a")}`}
                           label="Jumlah hari pengingat otomatis yang dihitung mulai tanggal hari ini"
                           min={1}
                           source="daysToSendReminder"
