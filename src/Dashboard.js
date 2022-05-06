@@ -16,7 +16,7 @@ export const Dashboard = () => {
   const [socketData, setSocketData] = useState({ message: "", data: "" });
   const [socketClientData, setSocketClientData] = useState(JSON.parse(localStorage.getItem('clientInfo')));
   const [qr, setQr] = useState({ message: "", data: "" });
-  const [clientInfo, setClientInfo] = useState(parsedClientInfoFromLocalStorage);
+  const [clientInfo, setClientInfo] = useState(parsedClientInfoFromLocalStorage || socketClientData);
   const [loading, setLoading] = useState(checkSavedQR ? false : true);
 
   useEffect(() => {
@@ -43,6 +43,7 @@ export const Dashboard = () => {
   useEffect(() => {
     setQr(socketData);
     console.log('qr data', qr)
+    console.log('socket data', socketData)
   }, [socketData, qr]);
 
   useEffect(() => {
