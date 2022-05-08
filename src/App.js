@@ -14,7 +14,7 @@ import PostIcon from "@mui/icons-material/Book";
 import simpleRestProvider from "ra-data-simple-rest";
 import LoginPage from "./loginPage";
 import moment from "moment";
-import { daysToSendReminderDefaultValue } from './utils.js'
+import { daysToSendReminderDefaultValue } from "./utils.js";
 
 const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
 const fetchJson = (url, options = {}) => {
@@ -69,13 +69,16 @@ const customDataProvider = {
     const includeDaysToSendReminder = params?.data?.setSendMessageNow && {
       daysToSendReminder: daysToSendReminderDefaultValue(params?.data),
     };
-    console.log('daysToSendReminder', daysToSendReminderDefaultValue(params?.data))
+    console.log(
+      "daysToSendReminder",
+      daysToSendReminderDefaultValue(params?.data)
+    );
     const modifiedDaysToSendReminderTimestamp = parseInt(
       moment()
         // use days for production, and minutes for development
         .add("days", daysToSendReminderDefaultValue(params?.data))
         // .add("minutes", params.data.daysToSendReminder)
-        .startOf('day')
+        .startOf("day")
         .format("x"),
       10
     );
@@ -83,9 +86,13 @@ const customDataProvider = {
       now: parseInt(moment().format("x"), 10),
       added: modifiedDaysToSendReminderTimestamp,
     });
-    delete params.data.daysToSendReminder
-    if (params?.data?.productionDays === '' && params?.data?.status !== 'SUDAH DIPESAN DAN BARANG PRODUKSI') delete params.data.productionDays
-    console.log('params.data after delete daysToSendReminder', params?.data)
+    delete params.data.daysToSendReminder;
+    if (
+      params?.data?.productionDays === "" &&
+      params?.data?.status !== "SUDAH DIPESAN DAN BARANG PRODUKSI"
+    )
+      delete params.data.productionDays;
+    console.log("params.data after delete daysToSendReminder", params?.data);
     const modifiedData = {
       ...params.data,
       user: userId,
@@ -95,7 +102,7 @@ const customDataProvider = {
       daysToSendReminderTimestamp: modifiedDaysToSendReminderTimestamp,
       ...includeDaysToSendReminder,
     };
-    console.log('create data', modifiedData)
+    console.log("create data", modifiedData);
     return fetchJson(url, {
       method: "POST",
       body: JSON.stringify(modifiedData),
@@ -118,13 +125,16 @@ const customDataProvider = {
     const includeDaysToSendReminder = params?.data?.setSendMessageNow && {
       daysToSendReminder: daysToSendReminderDefaultValue(params?.data),
     };
-    console.log('daysToSendReminder', daysToSendReminderDefaultValue(params?.data))
+    console.log(
+      "daysToSendReminder",
+      daysToSendReminderDefaultValue(params?.data)
+    );
     const modifiedDaysToSendReminderTimestamp = parseInt(
       moment()
         // use days for production, and minutes for development
         .add("days", daysToSendReminderDefaultValue(params?.data))
         // .add("minutes", params.data.daysToSendReminder)
-        .startOf('day')
+        .startOf("day")
         .format("x"),
       10
     );
@@ -132,9 +142,13 @@ const customDataProvider = {
       now: parseInt(moment().format("x"), 10),
       added: modifiedDaysToSendReminderTimestamp,
     });
-    delete params.data.daysToSendReminder
-    if (params?.data?.productionDays === '' && params?.data?.status !== 'SUDAH DIPESAN DAN BARANG PRODUKSI') delete params.data.productionDays
-    console.log('params.data after delete daysToSendReminder', params?.data)
+    delete params.data.daysToSendReminder;
+    if (
+      params?.data?.productionDays === "" &&
+      params?.data?.status !== "SUDAH DIPESAN DAN BARANG PRODUKSI"
+    )
+      delete params.data.productionDays;
+    console.log("params.data after delete daysToSendReminder", params?.data);
     const modifiedData = {
       ...params.data,
       user: userId,
@@ -158,16 +172,18 @@ const customDataProvider = {
 
 const App = () => {
   // return <Admin authProvider={authProvider} dashboard={Dashboard} dataProvider={dataProvider} >
-  const parsedClientInfoFromLocalStorage = JSON.parse(localStorage.getItem('clientInfo')) || {}
-  const checkSavedClientInfo = Object.keys(parsedClientInfoFromLocalStorage).length > 0
-  console.log('checkSavedClientInfo', checkSavedClientInfo)
+  const parsedClientInfoFromLocalStorage =
+    JSON.parse(localStorage.getItem("clientInfo")) || {};
+  const checkSavedClientInfo =
+    Object.keys(parsedClientInfoFromLocalStorage).length > 0;
+  console.log("checkSavedClientInfo", checkSavedClientInfo);
   return (
     <Admin
       authProvider={authProvider}
       dashboard={Dashboard}
       dataProvider={customDataProvider}
       loginPage={LoginPage}
-    // theme={theme}
+      // theme={theme}
     >
       {/* <Resource
         name="posts"
@@ -181,8 +197,8 @@ const App = () => {
       <Resource
         name="tracking"
         list={TrackingList}
-        create={checkSavedClientInfo ? TrackingCreate : null}
-        edit={checkSavedClientInfo ? TrackingEdit : null}
+        create={TrackingCreate}
+        edit={TrackingEdit}
         icon={PostIcon}
         show={TrackingShow}
       />

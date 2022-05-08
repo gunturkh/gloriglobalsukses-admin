@@ -87,8 +87,6 @@ const TrackingBulkActionButtons = (props) => (
 );
 
 export const TrackingList = (props) => {
-  const parsedClientInfoFromLocalStorage = JSON.parse(localStorage.getItem('clientInfo')) || {}
-  const checkSavedClientInfo = Object.keys(parsedClientInfoFromLocalStorage).length > 0
   const isSmall = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   console.log("props", props);
   const postRowStyle = (record) => ({
@@ -152,9 +150,7 @@ export const TrackingList = (props) => {
               { id: false, name: "Belum Terkirim" },
             ]}
           />
-          {checkSavedClientInfo &&
-            <EditButton />
-          }
+          <EditButton />
           <ShowButton />
         </Datagrid>
       )}

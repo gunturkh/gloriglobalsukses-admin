@@ -9,7 +9,7 @@ import {
   TextField,
   TopToolbar,
 } from "react-admin";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import MaterialButton from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -19,13 +19,9 @@ import DialogActions from "@mui/material/DialogActions";
 import MUITextField from "@mui/material/TextField";
 
 const TrackingShowActions = ({ basePath, data, handleClick }) => {
-  const parsedClientInfoFromLocalStorage = JSON.parse(localStorage.getItem('clientInfo')) || {}
-  const checkSavedClientInfo = Object.keys(parsedClientInfoFromLocalStorage).length > 0
   return (
     <TopToolbar>
-      {checkSavedClientInfo &&
-        <EditButton basePath={basePath} record={data} />
-      }
+      <EditButton basePath={basePath} record={data} />
       <Button
         // onClick={handlePDFClick}
         onClick={handleClick}
@@ -37,7 +33,7 @@ const TrackingShowActions = ({ basePath, data, handleClick }) => {
 };
 
 export const TrackingShow = (props) => {
-  const { id } = useParams()
+  const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [pageCount, setPageCount] = useState(1);
 
@@ -45,7 +41,7 @@ export const TrackingShow = (props) => {
   const handleDialogClose = () => setOpen(false);
 
   const handleConfirm = async () => {
-    console.log('confirm')
+    console.log("confirm");
     // const { id } = data;
     const pdf = await fetch(
       `${process.env.REACT_APP_SERVER_URL}/tracking/getpdf/${id}/${pageCount}`
@@ -59,7 +55,10 @@ export const TrackingShow = (props) => {
   };
 
   return (
-    <Show actions={<TrackingShowActions handleClick={handleClick} />} {...props}>
+    <Show
+      actions={<TrackingShowActions handleClick={handleClick} />}
+      {...props}
+    >
       <Dialog onClose={handleDialogClose} open={open}>
         <DialogTitle>Jumlah Halaman</DialogTitle>
         <DialogContent>
@@ -67,7 +66,7 @@ export const TrackingShow = (props) => {
             style={{ padding: "10px" }}
             defaultValue={1}
             min={1}
-            type='number'
+            type="number"
             name={"pageCount"}
             // label={"Jumlah Halaman"}
             onChange={(e) => setPageCount(e.target.value)}
