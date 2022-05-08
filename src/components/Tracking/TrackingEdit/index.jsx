@@ -9,8 +9,6 @@ import {
   DeleteWithConfirmButton,
   Edit,
   FormDataConsumer,
-  ImageInput,
-  ImageField,
   NumberInput,
   SaveButton,
   SelectInput,
