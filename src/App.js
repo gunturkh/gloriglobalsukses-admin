@@ -19,7 +19,8 @@ import { daysToSendReminderDefaultValue } from "./utils.js";
 const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
 const fetchJson = (url, options = {}) => {
   if (!options.headers) {
-    options.headers = new Headers({ Accept: "application/json" });
+    options.headers = new Headers();
+    // { Accept: "application/json" });
   }
 
   const token = localStorage.getItem("token");
@@ -30,13 +31,27 @@ const fetchJson = (url, options = {}) => {
 
 const dataProvider = simpleRestProvider(apiUrl, fetchJson);
 
+/**
+ * Convert a `File` object returned by the upload input into a base 64 string.
+ * That's not the most optimized way to store images in production, but it's
+ * enough to illustrate the idea of data provider decoration.
+ */
+const convertFileToBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+
+    reader.readAsDataURL(file.rawFile);
+  });
+
 const customDataProvider = {
   ...dataProvider,
   getList: async (resource, params) => {
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const query = {
-      sortBy: field ? `${field}:${order.toLowerCase()}` :  `read:ASC`,
+      sortBy: field ? `${field}:${order.toLowerCase()}` : `read:ASC`,
       limit: perPage,
       page: page,
       populate: "user",
@@ -93,6 +108,29 @@ const customDataProvider = {
     )
       delete params.data.productionDays;
     console.log("params.data after delete daysToSendReminder", params?.data);
+
+    const imagesURL = [];
+    if (params?.data?.images) {
+      for (const image of params.data.images) {
+        const imageData = new FormData();
+        imageData.append("file", image.rawFile);
+        imageData.append("upload_preset", "proofimages");
+        imageData.append("cloud_name", "glori-global-sukses");
+        await fetch(
+          " https://api.cloudinary.com/v1_1/glori-global-sukses/image/upload",
+          {
+            method: "post",
+            body: imageData,
+          }
+        )
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("image data uploaded", data);
+            imagesURL.push(data.secure_url);
+          });
+      }
+    }
+
     const modifiedData = {
       ...params.data,
       user: userId,
@@ -100,6 +138,7 @@ const customDataProvider = {
       sendMessageStatus: false,
       read: true,
       daysToSendReminderTimestamp: modifiedDaysToSendReminderTimestamp,
+      images: imagesURL,
       ...includeDaysToSendReminder,
     };
     console.log("create data", modifiedData);

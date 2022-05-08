@@ -7,13 +7,15 @@ import {
   BooleanInput,
   DateInput,
   DateTimeInput,
+  ImageField,
+  ImageInput,
   NumberInput,
   SelectInput,
   SimpleForm,
   TextInput,
 } from "react-admin";
 import { FormDataConsumer } from "react-admin";
-import { daysToSendReminderDefaultValue } from '../../utils'
+import { daysToSendReminderDefaultValue } from "../../utils";
 
 export const TrackingCreate = (props) => {
   return (
@@ -81,6 +83,16 @@ export const TrackingCreate = (props) => {
                 />
               </Grid> */}
                 <Grid md={12} paddingX={2}>
+                  <ImageInput
+                    multiple
+                    source="images"
+                    label="Upload Gambar Bukti"
+                    accept="image/*"
+                  >
+                    <ImageField source="images" title="bukti" />
+                  </ImageInput>
+                </Grid>
+                <Grid md={12} paddingX={2}>
                   <BooleanInput
                     fullWidth
                     label={"Set status secara manual"}
@@ -95,8 +107,16 @@ export const TrackingCreate = (props) => {
                           fullWidth
                           source="status"
                           helperText={`Sistem akan mereset warna data tracking pada tanggal ${moment()
-                            .add(daysToSendReminderDefaultValue(formData), "days").startOf('day')
-                            .format("DD MMM YYYY HH:mm a")} (${daysToSendReminderDefaultValue(formData)} hari dari sekarang)`}
+                            .add(
+                              daysToSendReminderDefaultValue(formData),
+                              "days"
+                            )
+                            .startOf("day")
+                            .format(
+                              "DD MMM YYYY HH:mm a"
+                            )} (${daysToSendReminderDefaultValue(
+                            formData
+                          )} hari dari sekarang)`}
                           choices={[
                             {
                               id: "SUDAH DIPESAN DAN BARANG READY",
@@ -195,7 +215,7 @@ export const TrackingCreate = (props) => {
                 <FormDataConsumer>
                   {({ formData, ...rest }) =>
                     formData.status ===
-                    "BARANG KOMPLIT ITEM & BELUM CLEAR DP" && (
+                      "BARANG KOMPLIT ITEM & BELUM CLEAR DP" && (
                       <Grid md={12} paddingX={2}>
                         <DateInput
                           fullWidth
@@ -216,7 +236,7 @@ export const TrackingCreate = (props) => {
                 <FormDataConsumer>
                   {({ formData, ...rest }) =>
                     formData.status ===
-                    "BARANG KOMPLIT ITEM & SUDAH CLEAR DP" && (
+                      "BARANG KOMPLIT ITEM & SUDAH CLEAR DP" && (
                       <Grid md={12} paddingX={2}>
                         <DateInput
                           fullWidth
@@ -242,7 +262,8 @@ export const TrackingCreate = (props) => {
                         <NumberInput
                           fullWidth
                           helperText={`Sistem akan mereset warna data tracking pada tanggal ${moment()
-                            .add(formData.daysToSendReminder, "days").startOf('day')
+                            .add(formData.daysToSendReminder, "days")
+                            .startOf("day")
                             .format("DD MMM YYYY HH:mm a")}`}
                           label="Jumlah hari pengingat otomatis yang dihitung mulai tanggal hari ini"
                           min={1}
@@ -286,14 +307,17 @@ export const TrackingCreate = (props) => {
                         formData.status === "SUDAH DIPESAN DAN BARANG READY"
                       ) {
                         return (
-                          <Grid md={12}>{`Customer *${formData?.name
-                            }* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder
-                            }* dengan item *${formData?.item
-                            }* sudah dipesan dan dikemas pada tanggal ${moment(
-                              formData?.customerOrderDate
-                            ).format(
-                              "DD MMMM YYYY"
-                            )}, sudah dalam proses pengiriman ke Gudang China. Mohon maaf atas keterlambatan informasi yang diberikan, ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          <Grid md={12}>{`Customer *${
+                            formData?.name
+                          }* yth, kami menginformasikan bahwa barang no *${
+                            formData?.salesOrder
+                          }* dengan item *${
+                            formData?.item
+                          }* sudah dipesan dan dikemas pada tanggal ${moment(
+                            formData?.customerOrderDate
+                          ).format(
+                            "DD MMMM YYYY"
+                          )}, sudah dalam proses pengiriman ke Gudang China. Mohon maaf atas keterlambatan informasi yang diberikan, ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
                         );
                       }
 
@@ -302,15 +326,19 @@ export const TrackingCreate = (props) => {
                         formData.status === "SUDAH DIPESAN DAN BARANG PRODUKSI"
                       ) {
                         return (
-                          <Grid md={12}>{`Customer *${formData?.name
-                            }* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder
-                            }* dengan item *${formData?.item
-                            }* sudah dipesan dan dikemas pada tanggal ${moment(
-                              formData?.customerOrderDate
-                            ).format(
-                              "DD MMMM YYYY"
-                            )} dan dalam proses *produksi ${formData?.productionDays
-                            } hari*. Kemungkinan akan mengalami keterlambatan pengiriman dikarenakan adanya proses produksi tersebut. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          <Grid md={12}>{`Customer *${
+                            formData?.name
+                          }* yth, kami menginformasikan bahwa barang no *${
+                            formData?.salesOrder
+                          }* dengan item *${
+                            formData?.item
+                          }* sudah dipesan dan dikemas pada tanggal ${moment(
+                            formData?.customerOrderDate
+                          ).format(
+                            "DD MMMM YYYY"
+                          )} dan dalam proses *produksi ${
+                            formData?.productionDays
+                          } hari*. Kemungkinan akan mengalami keterlambatan pengiriman dikarenakan adanya proses produksi tersebut. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
                         );
                       }
 
@@ -338,14 +366,17 @@ export const TrackingCreate = (props) => {
                       // BARANG LOADING KE BATAM
                       if (formData.status === "BARANG LOADING KE BATAM") {
                         return (
-                          <Grid md={12}>{`Customer *${formData?.name
-                            }* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder
-                            }* dengan item *${formData?.item}* atas *${formData?.resi
-                            }* sudah di loading dan akan tiba di gudang Jakarta dengan estimasi *${moment(
-                              formData?.estimatedDate
-                            ).format(
-                              "DD MMMM YYYY"
-                            )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          <Grid md={12}>{`Customer *${
+                            formData?.name
+                          }* yth, kami menginformasikan bahwa barang no *${
+                            formData?.salesOrder
+                          }* dengan item *${formData?.item}* atas *${
+                            formData?.resi
+                          }* sudah di loading dan akan tiba di gudang Jakarta dengan estimasi *${moment(
+                            formData?.estimatedDate
+                          ).format(
+                            "DD MMMM YYYY"
+                          )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
                         );
                       }
 
@@ -355,15 +386,19 @@ export const TrackingCreate = (props) => {
                         "BARANG KOMPLIT ITEM & BELUM CLEAR DP"
                       ) {
                         return (
-                          <Grid md={12}>{`Customer *${formData?.name
-                            }* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder
-                            }* dengan item *${formData?.item}* atas *${formData?.resi
-                            }* tiba di Gudang Jakarta pada tanggal  *${moment(
-                              formData?.estimatedDate
-                            ).format(
-                              "DD MMMM YYYY"
-                            )}* dan akan segera diproses pengiriman ke alamat anda. Mohon untuk segera melakukan pelunasan *sisa DP 30%* sebesar *IDR ${formData?.remainingDownPaymentAmount
-                            }*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          <Grid md={12}>{`Customer *${
+                            formData?.name
+                          }* yth, kami menginformasikan bahwa barang no *${
+                            formData?.salesOrder
+                          }* dengan item *${formData?.item}* atas *${
+                            formData?.resi
+                          }* tiba di Gudang Jakarta pada tanggal  *${moment(
+                            formData?.estimatedDate
+                          ).format(
+                            "DD MMMM YYYY"
+                          )}* dan akan segera diproses pengiriman ke alamat anda. Mohon untuk segera melakukan pelunasan *sisa DP 30%* sebesar *IDR ${
+                            formData?.remainingDownPaymentAmount
+                          }*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
                         );
                       }
 
@@ -373,15 +408,19 @@ export const TrackingCreate = (props) => {
                         "BARANG KOMPLIT ITEM & SUDAH CLEAR DP"
                       ) {
                         return (
-                          <Grid md={12}>{`Customer *${formData?.name
-                            }* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder
-                            }* dengan item *${formData?.item
-                            }* tiba di Gudang Jakarta pada tanggal  *${moment(
-                              formData?.estimatedDate
-                            ).format(
-                              "DD MMMM YYYY"
-                            )}* dan sudah dikirimkan dengan nomor resi *${formData?.resi
-                            }* .Jangan lupa Untuk membuat video unboxing jika barang telah sampai untuk menghindari kesalahan dalam pengiriman. Ditunggu orderan selanjutnya, Terima kasih.`}</Grid>
+                          <Grid md={12}>{`Customer *${
+                            formData?.name
+                          }* yth, kami menginformasikan bahwa barang no *${
+                            formData?.salesOrder
+                          }* dengan item *${
+                            formData?.item
+                          }* tiba di Gudang Jakarta pada tanggal  *${moment(
+                            formData?.estimatedDate
+                          ).format(
+                            "DD MMMM YYYY"
+                          )}* dan sudah dikirimkan dengan nomor resi *${
+                            formData?.resi
+                          }* .Jangan lupa Untuk membuat video unboxing jika barang telah sampai untuk menghindari kesalahan dalam pengiriman. Ditunggu orderan selanjutnya, Terima kasih.`}</Grid>
                         );
                       }
 
