@@ -70,8 +70,8 @@ export const Dashboard = () => {
     setLoading(true);
     localStorage.removeItem("clientInfo");
     localStorage.removeItem("qr");
-    setSocketClientData({});
-    setClientInfo({});
+    // setSocketClientData({});
+    // setClientInfo({});
     socket.disconnect();
     const response = await fetch(`${url}/auth/wa-logout`);
     const result = await response.json();
