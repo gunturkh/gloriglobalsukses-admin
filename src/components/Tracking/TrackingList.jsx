@@ -16,6 +16,14 @@ import {
 import BulkUpdateStatusButton from "../Buttons/BulkUpdateStatusButton";
 
 const trackingFilters = [
+  <SelectInput
+    label="Terbaca"
+    source="read"
+    choices={[
+      { id: true, name: "Terbaca" },
+      { id: false, name: "Belum Terbaca" },
+    ]}
+  />,
   <TextInput label="Resi" source="resi" />,
   <TextInput label="Barang" source="item" />,
   <TextInput label="No HP" source="phone" />,
@@ -98,6 +106,7 @@ export const TrackingList = (props) => {
       filters={trackingFilters}
       {...props}
       bulkActionButtons={<TrackingBulkActionButtons />}
+      perPage={25}
     >
       {isSmall ? (
         <SimpleList
@@ -148,6 +157,14 @@ export const TrackingList = (props) => {
             choices={[
               { id: true, name: "Terkirim" },
               { id: false, name: "Belum Terkirim" },
+            ]}
+          />
+          <SelectField
+            source="read"
+            label="Terbaca"
+            choices={[
+              { id: true, name: "Terbaca" },
+              { id: false, name: "Belum Terbaca" },
             ]}
           />
           <EditButton />

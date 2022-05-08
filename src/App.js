@@ -36,7 +36,7 @@ const customDataProvider = {
     const { page, perPage } = params.pagination;
     const { field, order } = params.sort;
     const query = {
-      sortBy: `${field}:${order.toLowerCase()}`,
+      sortBy: field ? `${field}:${order.toLowerCase()}` :  `read:ASC`,
       limit: perPage,
       page: page,
       populate: "user",
