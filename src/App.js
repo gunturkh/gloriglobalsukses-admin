@@ -182,6 +182,7 @@ const customDataProvider = {
       read: true,
       daysToSendReminderTimestamp: modifiedDaysToSendReminderTimestamp,
       ...includeDaysToSendReminder,
+      history: [...params.data.history, params.data]
     };
     return fetchJson(url, {
       method: "PUT",
