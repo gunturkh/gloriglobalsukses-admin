@@ -87,6 +87,10 @@ export const TrackingShow = (props) => {
           source="status"
           choices={[
             {
+              id: "STATUS ORDERAN SUDAH DITERIMA",
+              name: "STATUS ORDERAN SUDAH DITERIMA",
+            },
+            {
               id: "SUDAH DIPESAN DAN BARANG READY",
               name: "SUDAH DIPESAN DAN BARANG READY",
             },

@@ -119,6 +119,10 @@ export const TrackingCreate = (props) => {
                           )} hari dari sekarang)`}
                           choices={[
                             {
+                              id: "STATUS ORDERAN SUDAH DITERIMA",
+                              name: "STATUS ORDERAN SUDAH DITERIMA",
+                            },
+                            {
                               id: "SUDAH DIPESAN DAN BARANG READY",
                               name: "SUDAH DIPESAN DAN BARANG READY",
                             },
@@ -302,6 +306,15 @@ export const TrackingCreate = (props) => {
                 <Box mt={1}>
                   <FormDataConsumer>
                     {({ formData }) => {
+                      // STATUS ORDERAN SUDAH DITERIMA
+                      if (formData.status === "STATUS ORDERAN SUDAH DITERIMA") {
+                        return (
+                          <Grid
+                            md={12}
+                          >{`Customer *${formData?.name}* yth, Terima kasih sudah berbelanja, orderan anda dengan *${formData?.salesOrder}* barang *${formData?.item}* sudah kami terima dan akan segera diproses, mohon tunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                        );
+                      }
+
                       // SUDAH DIPESAN DAN BARANG READY
                       if (
                         formData.status === "SUDAH DIPESAN DAN BARANG READY"
