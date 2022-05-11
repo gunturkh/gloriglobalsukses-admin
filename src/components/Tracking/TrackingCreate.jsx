@@ -431,7 +431,7 @@ export const TrackingCreate = (props) => {
                             formData?.estimatedDate
                           ).format(
                             "DD MMMM YYYY"
-                          )}* dan sudah dikirimkan dengan nomor resi *${
+                          )}* dan sudah dikirimkan dengan nomor resi SENTRAL CARGO *${
                             formData?.resi
                           }* .Jangan lupa Untuk membuat video unboxing jika barang telah sampai untuk menghindari kesalahan dalam pengiriman. Ditunggu orderan selanjutnya, Terima kasih.`}</Grid>
                         );
