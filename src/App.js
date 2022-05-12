@@ -174,6 +174,33 @@ const customDataProvider = {
     )
       delete params.data.productionDays;
     console.log("params.data after delete daysToSendReminder", params?.data);
+
+    const imagesURL = [];
+    if (params?.data?.images) {
+      const newImages = params.data.images.filter(
+        (p) => p.rawFile instanceof File
+      );
+      if (newImages.length > 0) {
+        for (const image of newImages) {
+          const imageData = new FormData();
+          imageData.append("file", image.rawFile);
+          imageData.append("upload_preset", "proofimages");
+          imageData.append("cloud_name", "glori-global-sukses");
+          await fetch(
+            " https://api.cloudinary.com/v1_1/glori-global-sukses/image/upload",
+            {
+              method: "post",
+              body: imageData,
+            }
+          )
+            .then((res) => res.json())
+            .then((data) => {
+              console.log("image data uploaded", data);
+              imagesURL.push(data.secure_url);
+            });
+        }
+      }
+    }
     const modifiedData = {
       ...params.data,
       user: userId,
@@ -182,7 +209,8 @@ const customDataProvider = {
       read: true,
       daysToSendReminderTimestamp: modifiedDaysToSendReminderTimestamp,
       ...includeDaysToSendReminder,
-      history: [...params.data.history, params.data]
+      history: [...params.data.history, params.data],
+      images: imagesURL,
     };
     return fetchJson(url, {
       method: "PUT",
@@ -203,6 +231,7 @@ const App = () => {
   const checkSavedClientInfo =
     Object.keys(parsedClientInfoFromLocalStorage).length > 0;
   console.log("checkSavedClientInfo", checkSavedClientInfo);
+  const permissions = localStorage.getItem("permissions");
   return (
     <Admin
       authProvider={authProvider}
@@ -223,8 +252,8 @@ const App = () => {
       <Resource
         name="tracking"
         list={TrackingList}
-        create={TrackingCreate}
-        edit={TrackingEdit}
+        create={permissions === "admin" ? TrackingCreate : null}
+        edit={permissions === "admin" ? TrackingEdit : null}
         icon={PostIcon}
         show={TrackingShow}
       />

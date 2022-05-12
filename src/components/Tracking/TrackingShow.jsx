@@ -3,6 +3,7 @@ import {
   Button,
   DateField,
   EditButton,
+  NumberField,
   SelectField,
   Show,
   SimpleShowLayout,
@@ -19,9 +20,12 @@ import DialogActions from "@mui/material/DialogActions";
 import MUITextField from "@mui/material/TextField";
 
 const TrackingShowActions = ({ basePath, data, handleClick }) => {
+  const permissions = localStorage.getItem("permissions");
   return (
     <TopToolbar>
-      <EditButton basePath={basePath} record={data} />
+      {permissions === "admin" && (
+        <EditButton basePath={basePath} record={data} />
+      )}
       <Button
         // onClick={handlePDFClick}
         onClick={handleClick}
@@ -82,6 +86,7 @@ export const TrackingShow = (props) => {
         <TextField source="phone" />
         <TextField source="address" />
         <TextField source="item" />
+        <TextField source="itemDetail" label="Keterangan Barang" />
         <TextField source="resi" />
         <SelectField
           source="status"
@@ -138,15 +143,13 @@ export const TrackingShow = (props) => {
           ]}
         /> */}
         <DateField source="customerOrderDate" label="Tanggal Customer Order" />
-        {/* <NumberField */}
-        {/*   source="daysToSendReminder" */}
-        {/*   label="Jumlah hari pengingat otomatis dari tanggal customer order" */}
-        {/*   helperText="Masukkan Jumlah hari pengingat otomatis dari tanggal customer order" */}
-        {/* /> */}
+        <NumberField source="cartonAmount" label="Jumlah Carton" />
+        <TextField source="cargoName" label="Nama Cargo" />
         <DateField
           source="orderArrivedToWarehouseDate"
           label="Tanggal Terima Gudang"
         />
+        <DateField source="shipoutDate" label="Tanggal Ship Out" />
         {/* <TextField label="Diedit oleh" source="user.name" /> */}
         <SelectField
           source="sendMessageStatus"

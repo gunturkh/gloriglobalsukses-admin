@@ -19,11 +19,13 @@ const authProvider = {
       })
       .then(({ tokens, user }) => {
         const { access } = tokens;
+        const { role } = user;
         const accessToken = access.token;
         // const refreshToken = refresh.token;
         // const decodedToken = decodeJwt(accessToken);
         localStorage.setItem("token", accessToken);
         localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("permissions", role);
       })
       .catch(() => {
         throw new Error("Network error");
@@ -33,6 +35,7 @@ const authProvider = {
   logout: () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("permissions");
     return Promise.resolve();
   },
   // called when the API returns an error

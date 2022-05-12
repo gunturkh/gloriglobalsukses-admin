@@ -9,6 +9,8 @@ import {
   DeleteWithConfirmButton,
   Edit,
   FormDataConsumer,
+  ImageField,
+  ImageInput,
   NumberInput,
   SaveButton,
   SelectInput,
@@ -66,6 +68,20 @@ export const TrackingEdit = (props) => (
                 <TextInput fullWidth source="item" label="Barang" />
               </Grid>
               <Grid md={6} paddingX={2}>
+                <TextInput
+                  fullWidth
+                  source="itemDetail"
+                  label="Keterangan Barang"
+                />
+              </Grid>
+              <Grid md={6} paddingX={2}>
+                <NumberInput
+                  fullWidth
+                  source="cartonAmount"
+                  label="Jumlah Carton"
+                />
+              </Grid>
+              <Grid md={6} paddingX={2}>
                 <TextInput fullWidth source="resi" label="No Resi" />
               </Grid>
               <Grid md={6} paddingX={2}>
@@ -95,6 +111,26 @@ export const TrackingEdit = (props) => (
                   source="orderArrivedToWarehouseDate"
                   label="Tanggal Terima Gudang"
                 />
+              </Grid>
+              <Grid md={6} paddingX={2}>
+                <TextInput fullWidth source="cargoName" label="Nama Cargo" />
+              </Grid>
+              <Grid md={6} paddingX={2}>
+                <DateInput
+                  fullWidth
+                  source="shipoutDate"
+                  label="Tanggal Ship Out"
+                />
+              </Grid>
+              <Grid md={12} paddingX={2}>
+                <ImageInput
+                  multiple
+                  source="images"
+                  label="Upload Gambar Bukti"
+                  accept="image/*"
+                >
+                  <ImageField source="images" title="bukti" />
+                </ImageInput>
               </Grid>
               {/* <Grid md={6} paddingX={2}>
                 <SelectInput

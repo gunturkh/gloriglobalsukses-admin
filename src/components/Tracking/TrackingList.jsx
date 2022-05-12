@@ -99,8 +99,9 @@ const TrackingBulkActionButtons = (props) => (
 );
 
 export const TrackingList = (props) => {
+  const permissions = localStorage.getItem("permissions");
+  console.log("permissions", permissions);
   const isSmall = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  console.log("props", props);
   const postRowStyle = (record) => ({
     backgroundColor: record.read === false ? "rgba(0,0,0,0.2)" : "white",
     color: record.read === false ? "black" : "white",
@@ -130,18 +131,7 @@ export const TrackingList = (props) => {
             source="customerOrderDate"
             label="Tanggal Customer Order"
           />
-          <DateField
-            source="orderArrivedToWarehouseDate"
-            label="Tanggal Terima Gudang"
-          />
-          <SelectField
-            source="label"
-            choices={[
-              { id: "retailgeneral", name: "Barang Retail/General" },
-              { id: "kids", name: "Barang Anak" },
-              { id: "cosmetic", name: "Cosmetic" },
-            ]}
-          />
+          <TextField source="cargoName" label="Nama Cargo" />
           <SelectField
             source="delay"
             choices={[
@@ -171,7 +161,7 @@ export const TrackingList = (props) => {
               { id: false, name: "Belum Terbaca" },
             ]}
           />
-          <EditButton />
+          {permissions === "admin" && <EditButton />}
           <ShowButton />
         </Datagrid>
       )}
