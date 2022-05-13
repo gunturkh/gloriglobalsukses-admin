@@ -178,7 +178,7 @@ const customDataProvider = {
     const imagesURL = [];
     if (params?.data?.images) {
       const newImages = params.data.images.filter(
-        (p) => p.rawFile instanceof File
+        (p) => p?.rawFile instanceof File
       );
       if (newImages.length > 0) {
         for (const image of newImages) {

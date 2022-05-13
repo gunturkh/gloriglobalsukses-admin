@@ -42,6 +42,7 @@ export const TrackingCreate = (props) => {
                     fullWidth
                     source="itemDetail"
                     label="Keterangan Barang"
+                    defaultValue={"-"}
                   />
                 </Grid>
                 <Grid md={6} paddingX={2}>
@@ -49,6 +50,7 @@ export const TrackingCreate = (props) => {
                     fullWidth
                     source="cartonAmount"
                     label="Jumlah Carton"
+                    defaultValue={1}
                   />
                 </Grid>
                 <Grid md={6} paddingX={2}>
@@ -87,7 +89,12 @@ export const TrackingCreate = (props) => {
                   />
                 </Grid>
                 <Grid md={6} paddingX={2}>
-                  <TextInput fullWidth source="cargoName" label="Nama Cargo" />
+                  <TextInput
+                    fullWidth
+                    source="cargoName"
+                    label="Nama Cargo"
+                    defaultValue={"-"}
+                  />
                 </Grid>
                 <Grid md={6} paddingX={2}>
                   <DateInput
