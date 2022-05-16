@@ -16,6 +16,7 @@ import {
 } from "react-admin";
 import { FormDataConsumer } from "react-admin";
 import { daysToSendReminderDefaultValue } from "../../utils";
+import { CustomAutoCompleteUserInput } from "../Inputs";
 
 export const TrackingCreate = (props) => {
   return (
@@ -25,12 +26,7 @@ export const TrackingCreate = (props) => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={6} spacing={2}>
               <Grid container spacing={2}>
-                <Grid md={6} paddingX={2}>
-                  <TextInput fullWidth source="name" label="Nama" />
-                </Grid>
-                <Grid md={6} paddingX={2}>
-                  <TextInput fullWidth source="phone" label="No HP" />
-                </Grid>
+                <CustomAutoCompleteUserInput />
                 <Grid md={6} paddingX={2}>
                   <TextInput fullWidth source="address" label="Alamat" />
                 </Grid>
