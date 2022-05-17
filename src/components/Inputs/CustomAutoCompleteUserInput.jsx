@@ -21,6 +21,7 @@ export const CustomAutoCompleteUserInput = () => {
               {
                 name: currentValue?.name,
                 phone: currentValue?.phone,
+                address: currentValue?.address,
               },
             ];
           }
@@ -34,8 +35,9 @@ export const CustomAutoCompleteUserInput = () => {
         (item) => item.name === name
       );
       setValue("phone", AutoCompletePhoneFieldValue?.phone);
+      setValue("address", AutoCompletePhoneFieldValue?.address);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, setValue]);
 
   React.useEffect(() => {
@@ -66,6 +68,9 @@ export const CustomAutoCompleteUserInput = () => {
       </Grid>
       <Grid md={6} paddingX={2}>
         <TextInput fullWidth label="No HP" source="phone" />
+      </Grid>
+      <Grid md={6} paddingX={2}>
+        <TextInput fullWidth source="address" label="Alamat" />
       </Grid>
     </>
   );

@@ -57,9 +57,6 @@ export const TrackingEdit = (props) => (
             <Grid container spacing={2}>
               <CustomAutoCompleteUserInput />
               <Grid md={6} paddingX={2}>
-                <TextInput fullWidth source="address" label="Alamat" />
-              </Grid>
-              <Grid md={6} paddingX={2}>
                 <TextInput fullWidth source="item" label="Barang" />
               </Grid>
               <Grid md={6} paddingX={2}>
