@@ -413,7 +413,7 @@ export const TrackingEdit = (props) => (
                       return (
                         <Grid
                           md={12}
-                        >{`Customer *${formData?.name}* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder}* dengan item *${formData?.item}* sudah tiba di Gudang China dengan *${formData?.resi}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                        >{`Customer *${formData?.name}* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder}* dengan item *${formData?.item}* sudah tiba di Gudang China dengan resi china lokal *${formData?.resi}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
                       );
                     }
 
