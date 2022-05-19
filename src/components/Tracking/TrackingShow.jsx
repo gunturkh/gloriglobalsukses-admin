@@ -146,6 +146,10 @@ export const TrackingShow = (props) => {
         <NumberField source="cartonAmount" label="Jumlah Carton" />
         <TextField source="cargoName" label="Nama Cargo" />
         <DateField
+          source="estimatedDate"
+          label="Tanggal Perkiraan Barang Sampai"
+        />
+        <DateField
           source="orderArrivedToWarehouseDate"
           label="Tanggal Terima Gudang"
         />
