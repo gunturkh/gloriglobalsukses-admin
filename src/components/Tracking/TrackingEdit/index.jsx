@@ -389,7 +389,7 @@ export const TrackingEdit = (props) => (
                           formData?.salesOrder
                         }* dengan item *${
                           formData?.item
-                        }* sudah dipesan dan dikemas pada tanggal ${moment(
+                        }* sudah dipesan pada tanggal ${moment(
                           formData?.customerOrderDate
                         ).format("DD MMMM YYYY")} dan dalam proses *produksi ${
                           formData?.productionDays

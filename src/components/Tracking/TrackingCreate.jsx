@@ -369,7 +369,7 @@ export const TrackingCreate = (props) => {
                             formData?.salesOrder
                           }* dengan item *${
                             formData?.item
-                          }* sudah dipesan dan dikemas pada tanggal ${moment(
+                          }* sudah dipesan pada tanggal ${moment(
                             formData?.customerOrderDate
                           ).format(
                             "DD MMMM YYYY"
