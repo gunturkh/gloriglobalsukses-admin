@@ -4,6 +4,7 @@ import {
   ChipField,
   Datagrid,
   DateField,
+  DateInput,
   EditButton,
   List,
   SelectField,
@@ -16,6 +17,19 @@ import {
 import BulkUpdateStatusButton from "../Buttons/BulkUpdateStatusButton";
 
 const trackingFilters = [
+  <DateInput
+    label="Tanggal Customer Order"
+    source="customerOrderDate"
+    parse={(value) => `${value}T00:00:00.000Z`}
+  />,
+  // <DateInput
+  //   source="customerOrderDate_gte"
+  //   label="Tanggal Customer Order (Start)"
+  // />,
+  // <DateInput
+  //   source="customerOrderDate_lte"
+  //   label="Tanggal Customer Order (End)"
+  // />,
   <SelectInput
     label="Terbaca"
     source="read"
