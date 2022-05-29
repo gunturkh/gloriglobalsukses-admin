@@ -29,7 +29,6 @@ const exporter = (trackingDatas) => {
       cartonAmount,
       orderArrivedToWarehouseDate,
       cargoName,
-      ...rest
     } = data;
 
     return {
@@ -57,7 +56,7 @@ const exporter = (trackingDatas) => {
         "Nama Cargo",
       ],
     },
-    (err, csv) => {
+    (_err, csv) => {
       downloadCSV(csv, `${moment().format("DD-MMMM-YYYY")} GGS-Data-Tracking`);
     }
   );
