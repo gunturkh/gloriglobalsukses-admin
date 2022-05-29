@@ -5,6 +5,7 @@ import {
   Datagrid,
   DateField,
   DateInput,
+  downloadCSV,
   EditButton,
   List,
   SelectField,
@@ -15,6 +16,52 @@ import {
   TextInput,
 } from "react-admin";
 import BulkUpdateStatusButton from "../Buttons/BulkUpdateStatusButton";
+import jsonExport from "jsonexport/dist";
+import moment from "moment";
+
+const exporter = (trackingDatas) => {
+  const trackingDatasForExport = trackingDatas.map((data) => {
+    const {
+      salesOrder,
+      item,
+      shipoutDate,
+      resi,
+      cartonAmount,
+      orderArrivedToWarehouseDate,
+      cargoName,
+      ...rest
+    } = data;
+
+    return {
+      "No SI": salesOrder,
+      "Nama Item": item,
+      "Ship Out": moment(shipoutDate).format("DD-MMMM-YYYY"),
+      "Resi China Local": resi,
+      "Total Ctn": cartonAmount,
+      "Tanggal Terima Gudang": moment(orderArrivedToWarehouseDate).format(
+        "DD-MMMM-YYYY"
+      ),
+      "Nama Cargo": cargoName,
+    };
+  });
+  jsonExport(
+    trackingDatasForExport,
+    {
+      headers: [
+        "No SI",
+        "Nama Item",
+        "Tanggal Kirim Bukti Payment",
+        "Ship Out",
+        "Total Ctn",
+        "Tanggal Terima Gudang",
+        "Nama Cargo",
+      ],
+    },
+    (err, csv) => {
+      downloadCSV(csv, `${moment().format("DD-MMMM-YYYY")} GGS-Data-Tracking`);
+    }
+  );
+};
 
 const trackingFilters = [
   <DateInput
@@ -125,6 +172,7 @@ export const TrackingList = (props) => {
       filters={trackingFilters}
       {...props}
       bulkActionButtons={<TrackingBulkActionButtons />}
+      exporter={exporter}
       perPage={25}
     >
       {isSmall ? (
