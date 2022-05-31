@@ -120,7 +120,7 @@ const trackingFilters = [
         id: "SUDAH TIBA DIGUDANG CHINA",
         name: "SUDAH TIBA DIGUDANG CHINA",
       },
-      { id: "BARANG LOADING KE BATAM", name: "BARANG LOADING KE BATAM" },
+      { id: "BARANG LOADING BATAM - JAKARTA", name: "BARANG LOADING BATAM - JAKARTA" },
       {
         id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
         name: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
