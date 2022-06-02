@@ -185,8 +185,8 @@ export const TrackingEdit = (props) => (
                             name: "SUDAH TIBA DIGUDANG CHINA",
                           },
                           {
-                            id: "BARANG LOADING KE BATAM",
-                            name: "BARANG LOADING KE BATAM",
+                            id: "BARANG LOADING BATAM - JAKARTA",
+                            name: "BARANG LOADING BATAM - JAKARTA",
                           },
                           {
                             id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
@@ -250,7 +250,7 @@ export const TrackingEdit = (props) => (
               </FormDataConsumer>
               <FormDataConsumer>
                 {({ formData, ...rest }) =>
-                  formData.status === "BARANG LOADING KE BATAM" && (
+                  formData.status === "BARANG LOADING BATAM - JAKARTA" && (
                     <Grid md={12} paddingX={2}>
                       <DateInput
                         fullWidth
@@ -417,8 +417,8 @@ export const TrackingEdit = (props) => (
                       );
                     }
 
-                    // BARANG LOADING KE BATAM
-                    if (formData.status === "BARANG LOADING KE BATAM") {
+                    // BARANG LOADING BATAM - JAKARTA
+                    if (formData.status === "BARANG LOADING BATAM - JAKARTA") {
                       return (
                         <Grid md={12}>{`Customer *${
                           formData?.name
