@@ -17,6 +17,7 @@ import {
 import { FormDataConsumer } from "react-admin";
 import { daysToSendReminderDefaultValue } from "../../utils";
 import { CustomAutoCompleteUserInput } from "../Inputs";
+import { rupiah } from "../../utils";
 
 export const TrackingCreate = (props) => {
   return (
@@ -130,17 +131,22 @@ export const TrackingCreate = (props) => {
                         <SelectInput
                           fullWidth
                           source="status"
-                          helperText={`Sistem akan mereset warna data tracking pada tanggal ${moment()
-                            .add(
-                              daysToSendReminderDefaultValue(formData),
-                              "days"
-                            )
-                            .startOf("day")
-                            .format(
-                              "DD MMM YYYY HH:mm a"
-                            )} (${daysToSendReminderDefaultValue(
-                            formData
-                          )} hari dari sekarang)`}
+                          helperText={
+                            formData?.status !==
+                            "BARANG KOMPLIT ITEM & SUDAH CLEAR DP"
+                              ? `Sistem akan mereset warna data tracking pada tanggal ${moment()
+                                  .add(
+                                    daysToSendReminderDefaultValue(formData),
+                                    "days"
+                                  )
+                                  .startOf("day")
+                                  .format(
+                                    "DD MMM YYYY HH:mm a"
+                                  )} (${daysToSendReminderDefaultValue(
+                                  formData
+                                )} hari dari sekarang)`
+                              : ""
+                          }
                           choices={[
                             {
                               id: "STATUS ORDERAN SUDAH DITERIMA",
@@ -401,7 +407,9 @@ export const TrackingCreate = (props) => {
                       }
 
                       // BARANG LOADING BATAM - JAKARTA
-                      if (formData.status === "BARANG LOADING BATAM - JAKARTA") {
+                      if (
+                        formData.status === "BARANG LOADING BATAM - JAKARTA"
+                      ) {
                         return (
                           <Grid md={12}>{`Customer *${
                             formData?.name
@@ -433,9 +441,9 @@ export const TrackingCreate = (props) => {
                             formData?.estimatedDate
                           ).format(
                             "DD MMMM YYYY"
-                          )}* dan akan segera diproses pengiriman ke alamat anda. Mohon untuk segera melakukan pelunasan *sisa DP 30%* sebesar *IDR ${
+                          )}* dan akan segera diproses pengiriman ke alamat anda. Mohon untuk segera melakukan pelunasan *sisa DP 30%* sebesar *IDR ${rupiah(
                             formData?.remainingDownPaymentAmount
-                          }*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
                         );
                       }
 

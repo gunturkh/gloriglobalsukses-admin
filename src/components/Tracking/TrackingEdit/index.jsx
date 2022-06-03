@@ -21,6 +21,7 @@ import {
 } from "react-admin";
 import { daysToSendReminderDefaultValue } from "../../../utils";
 import { CustomAutoCompleteUserInput } from "../../Inputs";
+import { rupiah } from "../../../utils";
 
 const TrackingTitle = ({ record }) => {
   return <span>Tracking {record ? `"${record.title}"` : ""}</span>;
@@ -155,14 +156,14 @@ export const TrackingEdit = (props) => (
                       <SelectInput
                         fullWidth
                         source="status"
-                        helperText={`Sistem akan mereset warna data tracking pada tanggal ${moment()
+                        helperText={formData?.status !== 'BARANG KOMPLIT ITEM & SUDAH CLEAR DP' ? `Sistem akan mereset warna data tracking pada tanggal ${moment()
                           .add(daysToSendReminderDefaultValue(formData), "days")
                           .startOf("day")
                           .format(
                             "DD MMM YYYY HH:mm a"
                           )} (${daysToSendReminderDefaultValue(
                           formData
-                        )} hari dari sekarang)`}
+                        )} hari dari sekarang)` : ""}
                         choices={[
                           {
                             id: "STATUS ORDERAN SUDAH DITERIMA",
@@ -449,9 +450,9 @@ export const TrackingEdit = (props) => (
                           formData?.estimatedDate
                         ).format(
                           "DD MMMM YYYY"
-                        )}* dan akan segera diproses pengiriman ke alamat anda. Mohon untuk segera melakukan pelunasan *sisa DP 30%* sebesar *IDR ${
+                        )}* dan akan segera diproses pengiriman ke alamat anda. Mohon untuk segera melakukan pelunasan *sisa DP 30%* sebesar *IDR ${rupiah(
                           formData?.remainingDownPaymentAmount
-                        }*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                        )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
                       );
                     }
 

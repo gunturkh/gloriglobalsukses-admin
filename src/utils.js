@@ -20,7 +20,7 @@ const daysToSendReminderDefaultValue = (trackingData) => {
       return setDaysReminderManually ? daysToSendReminder : 1
 
     case 'BARANG KOMPLIT ITEM & SUDAH CLEAR DP':
-      return setDaysReminderManually ? daysToSendReminder : 1
+      return setDaysReminderManually ? daysToSendReminder : 1000
 
     case 'DELAY - RANDOM CHECK CHINA':
       return setDaysReminderManually ? daysToSendReminder : 1
@@ -29,7 +29,14 @@ const daysToSendReminderDefaultValue = (trackingData) => {
       return setDaysReminderManually ? daysToSendReminder : 1
   }
 };
+const rupiah = (number) => {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+  }).format(number);
+};
 
 export {
-  daysToSendReminderDefaultValue
+  daysToSendReminderDefaultValue,
+  rupiah
 }
