@@ -34,7 +34,7 @@ const exporter = (trackingDatas) => {
     return {
       "No SI": salesOrder,
       "Nama Item": item,
-      "Ship Out": moment(shipoutDate).format("DD-MMMM-YYYY"),
+      "Tanggal Kirim Bukti Payment": moment(shipoutDate).format("DD-MMMM-YYYY"),
       "Resi China Local": resi,
       "Total Ctn": cartonAmount,
       "Tanggal Terima Gudang": moment(orderArrivedToWarehouseDate).format(
@@ -50,7 +50,6 @@ const exporter = (trackingDatas) => {
         "No SI",
         "Nama Item",
         "Tanggal Kirim Bukti Payment",
-        "Ship Out",
         "Total Ctn",
         "Tanggal Terima Gudang",
         "Nama Cargo",
