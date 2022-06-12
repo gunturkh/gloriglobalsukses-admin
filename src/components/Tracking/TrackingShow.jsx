@@ -9,6 +9,7 @@ import {
   SimpleShowLayout,
   TextField,
   TopToolbar,
+  useRecordContext,
 } from "react-admin";
 import { useParams } from "react-router-dom";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
@@ -18,6 +19,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import MUITextField from "@mui/material/TextField";
+import moment from "moment";
 
 const TrackingShowActions = ({ basePath, data, handleClick }) => {
   const permissions = localStorage.getItem("permissions");
@@ -35,12 +37,28 @@ const TrackingShowActions = ({ basePath, data, handleClick }) => {
     </TopToolbar>
   );
 };
-
+const HistoryField = () => {
+  const record = useRecordContext();
+  return (
+    <>
+      <p style={{ fontSize: "12px" }}>History</p>
+      <ul>
+        {record.history.map((item, idx) => (
+          <li key={idx} style={{ marginBottom: "10px", fontSize: "14px" }}>
+            <div>{moment(item.createdAt).format("DD-MMM-YYYY HH:mm:ss")}</div>
+            <div>{item.status}</div>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
 export const TrackingShow = (props) => {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const [pageCount, setPageCount] = useState(1);
 
+  console.log("props", props);
   const handleClick = () => setOpen(true);
   const handleDialogClose = () => setOpen(false);
 
@@ -111,7 +129,10 @@ export const TrackingShow = (props) => {
               id: "SUDAH TIBA DIGUDANG CHINA",
               name: "SUDAH TIBA DIGUDANG CHINA",
             },
-            { id: "BARANG LOADING BATAM - JAKARTA", name: "BARANG LOADING BATAM - JAKARTA" },
+            {
+              id: "BARANG LOADING BATAM - JAKARTA",
+              name: "BARANG LOADING BATAM - JAKARTA",
+            },
             {
               id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
               name: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
@@ -163,6 +184,7 @@ export const TrackingShow = (props) => {
             { id: false, name: "Belum Terkirim" },
           ]}
         />
+        <HistoryField />
       </SimpleShowLayout>
     </Show>
   );
