@@ -3,7 +3,6 @@ import {
   Button,
   DateField,
   EditButton,
-  recordConsumer,
   NumberField,
   SelectField,
   Show,
@@ -190,7 +189,7 @@ const WhatsappPreviewField = () => {
     <Grid style={{}}>
       <div
         style={{
-          fontWeight:  400,
+          fontWeight: 400,
           fontSize: 12,
           color: "rgba(0, 0, 0, 0.6)",
           marginBottom: 10,
