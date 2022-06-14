@@ -3,6 +3,7 @@ import {
   Button,
   DateField,
   EditButton,
+  recordConsumer,
   NumberField,
   SelectField,
   Show,
@@ -19,7 +20,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import MUITextField from "@mui/material/TextField";
+import { Grid } from "@mui/material";
 import moment from "moment";
+
+import { rupiah } from "../../utils";
 
 const TrackingShowActions = ({ basePath, data, handleClick }) => {
   const permissions = localStorage.getItem("permissions");
@@ -51,6 +55,151 @@ const HistoryField = () => {
         ))}
       </ul>
     </>
+  );
+};
+const WhatsappPreviewField = () => {
+  const record = useRecordContext();
+  const PreviewMessage = () => {
+    console.log("status", record.status);
+    // STATUS ORDERAN SUDAH DITERIMA
+    if (record.status === "STATUS ORDERAN SUDAH DITERIMA") {
+      return (
+        <Grid
+          md={12}
+        >{`Customer *${record?.name}* yth, Terima kasih sudah berbelanja, orderan anda dengan *${record?.salesOrder}* barang *${record?.item}* sudah kami terima dan akan segera diproses, mohon tunggu informasi selanjutnya. Terima kasih.`}</Grid>
+      );
+    }
+
+    // SUDAH DIPESAN DAN BARANG READY
+    if (record.status === "SUDAH DIPESAN DAN BARANG READY") {
+      return (
+        <Grid md={12}>{`Customer *${
+          record?.name
+        }* yth, kami menginformasikan bahwa barang no *${
+          record?.salesOrder
+        }* dengan item *${
+          record?.item
+        }* sudah dipesan dan dikemas pada tanggal ${moment(
+          record?.customerOrderDate
+        ).format(
+          "DD MMMM YYYY"
+        )}, sudah dalam proses pengiriman ke Gudang China. Ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+      );
+    }
+
+    // SUDAH DIPESAN DAN BARANG PRODUKSI
+    if (record.status === "SUDAH DIPESAN DAN BARANG PRODUKSI") {
+      return (
+        <Grid md={12}>{`Customer *${
+          record?.name
+        }* yth, kami menginformasikan bahwa barang no *${
+          record?.salesOrder
+        }* dengan item *${record?.item}* sudah dipesan pada tanggal ${moment(
+          record?.customerOrderDate
+        ).format("DD MMMM YYYY")} dan dalam proses *produksi ${
+          record?.productionDays
+        } hari*. Kemungkinan akan mengalami keterlambatan pengiriman dikarenakan adanya proses produksi tersebut. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+      );
+    }
+
+    // SUDAH DIKIRIM VENDOR KE GUDANG CHINA
+    if (record.status === "SUDAH DIKIRIM VENDOR KE GUDANG CHINA") {
+      return (
+        <Grid
+          md={12}
+        >{`Customer *${record?.name}* yth, kami menginformasikan bahwa barang no *${record?.salesOrder}* dengan item *${record?.item}* sudah dikirim dengan nomor *resi china lokal ${record?.resi}* dan akan tiba di Gudang China dalam waktu 4-5 hari. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+      );
+    }
+
+    // SUDAH TIBA DIGUDANG CHINA
+    if (record.status === "SUDAH TIBA DIGUDANG CHINA") {
+      return (
+        <Grid
+          md={12}
+        >{`Customer *${record?.name}* yth, kami menginformasikan bahwa barang no *${record?.salesOrder}* dengan item *${record?.item}* sudah tiba di Gudang China dengan resi china lokal *${record?.resi}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+      );
+    }
+
+    // BARANG LOADING BATAM - JAKARTA
+    if (record.status === "BARANG LOADING BATAM - JAKARTA") {
+      return (
+        <Grid md={12}>{`Customer *${
+          record?.name
+        }* yth, kami menginformasikan bahwa barang no *${
+          record?.salesOrder
+        }* dengan item *${record?.item}* atas *${
+          record?.resi
+        }* sudah di loading dan akan tiba di gudang Jakarta dengan estimasi *${moment(
+          record?.estimatedDate
+        ).format(
+          "DD MMMM YYYY"
+        )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+      );
+    }
+
+    // BARANG KOMPLIT ITEM & BELUM CLEAR DP
+    if (record.status === "BARANG KOMPLIT ITEM & BELUM CLEAR DP") {
+      return (
+        <Grid md={12}>{`Customer *${
+          record?.name
+        }* yth, kami menginformasikan bahwa barang no *${
+          record?.salesOrder
+        }* dengan item *${record?.item}* atas *${
+          record?.resi
+        }* tiba di Gudang Jakarta pada tanggal  *${moment(
+          record?.estimatedDate
+        ).format(
+          "DD MMMM YYYY"
+        )}* dan akan segera diproses pengiriman ke alamat anda. Mohon untuk segera melakukan pelunasan *sisa DP 30%* sebesar *IDR ${rupiah(
+          record?.remainingDownPaymentAmount
+        )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+      );
+    }
+
+    // BARANG KOMPLIT ITEM & SUDAH CLEAR DP
+    if (record.status === "BARANG KOMPLIT ITEM & SUDAH CLEAR DP") {
+      return (
+        <Grid md={12}>{`Customer *${
+          record?.name
+        }* yth, kami menginformasikan bahwa barang no *${
+          record?.salesOrder
+        }* dengan item *${
+          record?.item
+        }* tiba di Gudang Jakarta pada tanggal  *${moment(
+          record?.estimatedDate
+        ).format(
+          "DD MMMM YYYY"
+        )}* dan sudah dikirimkan dengan nomor resi SENTRAL CARGO *${
+          record?.resi
+        }* .Jangan lupa Untuk membuat video unboxing jika barang telah sampai untuk menghindari kesalahan dalam pengiriman. Ditunggu orderan selanjutnya, Terima kasih.`}</Grid>
+      );
+    }
+
+    // DELAY - RANDOM CHECK CHINA
+    if (record.status === "DELAY - RANDOM CHECK CHINA") {
+      return (
+        <Grid
+          md={12}
+        >{`Customer *${record?.name}* yth, kami menginformasikan bahwa barang no *${record?.salesOrder}* dengan item *${record?.item}* akan mengalami kemunduran estimasi tiba di Indonesia dikarenakan adanya *Random Check* di Custom China maka dari itu untuk estimasi selanjutnya akan kami informasikan kembali. Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu. Terima kasih.`}</Grid>
+      );
+    } else {
+      return <Grid md={12}>{record?.status}</Grid>;
+    }
+  };
+  return (
+    <Grid style={{}}>
+      <div
+        style={{
+          fontWeight:  400,
+          fontSize: 12,
+          color: "rgba(0, 0, 0, 0.6)",
+          marginBottom: 10,
+        }}
+      >
+        Isi Pesan WA
+      </div>
+      <PreviewMessage />
+    </Grid>
   );
 };
 export const TrackingShow = (props) => {
@@ -184,6 +333,7 @@ export const TrackingShow = (props) => {
             { id: false, name: "Belum Terkirim" },
           ]}
         />
+        <WhatsappPreviewField />
         <HistoryField />
       </SimpleShowLayout>
     </Show>
