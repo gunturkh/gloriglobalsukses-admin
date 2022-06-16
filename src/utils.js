@@ -25,6 +25,9 @@ const daysToSendReminderDefaultValue = (trackingData) => {
     case 'DELAY - RANDOM CHECK CHINA':
       return setDaysReminderManually ? daysToSendReminder : 1
 
+    case 'DELAY - STATUS BARANG OVERLOAD':
+      return setDaysReminderManually ? daysToSendReminder : 1
+
     default:
       return setDaysReminderManually ? daysToSendReminder : 1
   }

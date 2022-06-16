@@ -29,14 +29,15 @@ const exporter = (trackingDatas) => {
       cartonAmount,
       orderArrivedToWarehouseDate,
       cargoName,
-      customerOrderDate
+      customerOrderDate,
     } = data;
 
     return {
       "No SI": salesOrder,
       "Nama Item": item,
-      "Tanggal Kirim Bukti Payment": moment(customerOrderDate).format("DD-MMMM-YYYY"),
-      "Shipout": moment(shipoutDate).format("DD-MMMM-YYYY"),
+      "Tanggal Kirim Bukti Payment":
+        moment(customerOrderDate).format("DD-MMMM-YYYY"),
+      Shipout: moment(shipoutDate).format("DD-MMMM-YYYY"),
       "Resi China Local": resi,
       "Total Ctn": cartonAmount,
       "Tanggal Terima Gudang": moment(orderArrivedToWarehouseDate).format(
@@ -52,7 +53,7 @@ const exporter = (trackingDatas) => {
         "No SI",
         "Nama Item",
         "Tanggal Kirim Bukti Payment",
-        'Shipout',
+        "Shipout",
         "Total Ctn",
         "Tanggal Terima Gudang",
         "Nama Cargo",
@@ -122,7 +123,10 @@ const trackingFilters = [
         id: "SUDAH TIBA DIGUDANG CHINA",
         name: "SUDAH TIBA DIGUDANG CHINA",
       },
-      { id: "BARANG LOADING BATAM - JAKARTA", name: "BARANG LOADING BATAM - JAKARTA" },
+      {
+        id: "BARANG LOADING BATAM - JAKARTA",
+        name: "BARANG LOADING BATAM - JAKARTA",
+      },
       {
         id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
         name: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
@@ -134,6 +138,10 @@ const trackingFilters = [
       {
         id: "DELAY - RANDOM CHECK CHINA",
         name: "DELAY - RANDOM CHECK CHINA",
+      },
+      {
+        id: "DELAY - STATUS BARANG OVERLOAD",
+        name: "DELAY - STATUS BARANG OVERLOAD",
       },
     ]}
   />,

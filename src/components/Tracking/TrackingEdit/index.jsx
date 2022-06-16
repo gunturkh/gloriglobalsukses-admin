@@ -156,14 +156,22 @@ export const TrackingEdit = (props) => (
                       <SelectInput
                         fullWidth
                         source="status"
-                        helperText={formData?.status !== 'BARANG KOMPLIT ITEM & SUDAH CLEAR DP' ? `Sistem akan mereset warna data tracking pada tanggal ${moment()
-                          .add(daysToSendReminderDefaultValue(formData), "days")
-                          .startOf("day")
-                          .format(
-                            "DD MMM YYYY HH:mm a"
-                          )} (${daysToSendReminderDefaultValue(
-                          formData
-                        )} hari dari sekarang)` : ""}
+                        helperText={
+                          formData?.status !==
+                          "BARANG KOMPLIT ITEM & SUDAH CLEAR DP"
+                            ? `Sistem akan mereset warna data tracking pada tanggal ${moment()
+                                .add(
+                                  daysToSendReminderDefaultValue(formData),
+                                  "days"
+                                )
+                                .startOf("day")
+                                .format(
+                                  "DD MMM YYYY HH:mm a"
+                                )} (${daysToSendReminderDefaultValue(
+                                formData
+                              )} hari dari sekarang)`
+                            : ""
+                        }
                         choices={[
                           {
                             id: "STATUS ORDERAN SUDAH DITERIMA",
@@ -200,6 +208,10 @@ export const TrackingEdit = (props) => (
                           {
                             id: "DELAY - RANDOM CHECK CHINA",
                             name: "DELAY - RANDOM CHECK CHINA",
+                          },
+                          {
+                            id: "DELAY - STATUS BARANG OVERLOAD",
+                            name: "DELAY - STATUS BARANG OVERLOAD",
                           },
                         ]}
                       />
@@ -300,6 +312,32 @@ export const TrackingEdit = (props) => (
                 }
               </FormDataConsumer>
 
+              <FormDataConsumer>
+                {({ formData, ...rest }) =>
+                  formData.status === "DELAY - STATUS BARANG OVERLOAD" && (
+                    <>
+                      {" "}
+                      <Grid md={6} paddingX={2}>
+                        <DateInput
+                          fullWidth
+                          source="estimatedDate"
+                          label="Estimasi Awal Tanggal Barang Sampai"
+                          {...rest}
+                        />
+                      </Grid>
+                      <Grid md={6} paddingX={2}>
+                        <DateInput
+                          fullWidth
+                          source="newEstimatedDate"
+                          label="Estimasi Baru Tanggal Barang Sampai"
+                          {...rest}
+                        />
+                      </Grid>
+                    </>
+                  )
+                }
+              </FormDataConsumer>
+
               <Grid md={12} paddingX={2}>
                 <BooleanInput
                   label={"Atur jumlah hari kirim automatis secara manual"}
@@ -371,7 +409,7 @@ export const TrackingEdit = (props) => (
                           formData?.salesOrder
                         }* dengan item *${
                           formData?.item
-                        }* sudah dipesan dan dikemas pada tanggal ${moment(
+                        }* sudah dipesan & sedang dalam proses pengemasan pada tanggal ${moment(
                           formData?.customerOrderDate
                         ).format(
                           "DD MMMM YYYY"
@@ -425,7 +463,7 @@ export const TrackingEdit = (props) => (
                           formData?.name
                         }* yth, kami menginformasikan bahwa barang no *${
                           formData?.salesOrder
-                        }* dengan item *${formData?.item}* atas *${
+                        }* dengan item *${formData?.item}* dengan resi *${
                           formData?.resi
                         }* sudah di loading dan akan tiba di gudang Jakarta dengan estimasi *${moment(
                           formData?.estimatedDate
@@ -483,6 +521,27 @@ export const TrackingEdit = (props) => (
                         <Grid
                           md={12}
                         >{`Customer *${formData?.name}* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder}* dengan item *${formData?.item}* akan mengalami kemunduran estimasi tiba di Indonesia dikarenakan adanya *Random Check* di Custom China maka dari itu untuk estimasi selanjutnya akan kami informasikan kembali. Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu. Terima kasih.`}</Grid>
+                      );
+                    }
+
+                    // DELAY - STATUS BARANG OVERLOAD
+                    if (formData.status === "DELAY - STATUS BARANG OVERLOAD") {
+                      return (
+                        <Grid md={12}>{`Customer *${
+                          formData?.name
+                        }* yth, kami menginformasikan bahwa barang no *${
+                          formData?.salesOrder
+                        }* dengan item *${
+                          formData?.item
+                        }* Estimasi awal *${moment(
+                          formData?.estimatedDate
+                        ).format(
+                          "DD MMMM YYYY"
+                        )}* mengalami kemunduran Estimasi dikarenakan adanya *Overload Container* dipelabuhan Transit Indonesia. Maka estimasi selanjutnya *${moment(
+                          formData?.newEstimatedDate
+                        ).format(
+                          "DD MMMM YYYY"
+                        )}*, Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu informasi selanjutnyya. Terima kasih.`}</Grid>
                       );
                     } else {
                       return <Grid md={12}>{formData?.status}</Grid>;

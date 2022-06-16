@@ -78,7 +78,7 @@ const WhatsappPreviewField = () => {
           record?.salesOrder
         }* dengan item *${
           record?.item
-        }* sudah dipesan dan dikemas pada tanggal ${moment(
+        }* sudah dipesan & sedang dalam proses pengemasan pada tanggal ${moment(
           record?.customerOrderDate
         ).format(
           "DD MMMM YYYY"
@@ -126,7 +126,7 @@ const WhatsappPreviewField = () => {
           record?.name
         }* yth, kami menginformasikan bahwa barang no *${
           record?.salesOrder
-        }* dengan item *${record?.item}* atas *${
+        }* dengan item *${record?.item}* dengan resi *${
           record?.resi
         }* sudah di loading dan akan tiba di gudang Jakarta dengan estimasi *${moment(
           record?.estimatedDate
@@ -180,6 +180,15 @@ const WhatsappPreviewField = () => {
         <Grid
           md={12}
         >{`Customer *${record?.name}* yth, kami menginformasikan bahwa barang no *${record?.salesOrder}* dengan item *${record?.item}* akan mengalami kemunduran estimasi tiba di Indonesia dikarenakan adanya *Random Check* di Custom China maka dari itu untuk estimasi selanjutnya akan kami informasikan kembali. Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu. Terima kasih.`}</Grid>
+      );
+    }
+
+    // DELAY - STATUS BARANG OVERLOAD
+    if (record.status === "DELAY - STATUS BARANG OVERLOAD") {
+      return (
+        <Grid
+          md={12}
+        >{`Customer *${record?.name}* yth, kami menginformasikan bahwa barang no *${record?.salesOrder}* dengan item *${record?.item}* Estimasi awal *${record?.estimatedDate}* mengalami kemunduran Estimasi dikarenakan adanya *Overload Container* dipelabuhan Transit Indonesia. Maka estimasi selanjutnya *${record?.newEstimatedDate}*, Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu informasi selanjutnyya. Terima kasih.`}</Grid>
       );
     } else {
       return <Grid md={12}>{record?.status}</Grid>;
@@ -292,6 +301,10 @@ export const TrackingShow = (props) => {
             {
               id: "DELAY - RANDOM CHECK CHINA",
               name: "DELAY - RANDOM CHECK CHINA",
+            },
+            {
+              id: "DELAY - STATUS BARANG OVERLOAD",
+              name: "DELAY - STATUS BARANG OVERLOAD",
             },
           ]}
         />
