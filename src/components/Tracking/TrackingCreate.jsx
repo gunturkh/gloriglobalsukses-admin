@@ -389,7 +389,7 @@ export const TrackingCreate = (props) => {
                             formData?.customerOrderDate
                           ).format(
                             "DD MMMM YYYY"
-                          )}, sudah dalam proses pengiriman ke Gudang China. Ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          )}. Ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
                         );
                       }
 
