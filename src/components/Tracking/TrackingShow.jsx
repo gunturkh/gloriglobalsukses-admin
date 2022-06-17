@@ -186,9 +186,19 @@ const WhatsappPreviewField = () => {
     // DELAY - STATUS BARANG OVERLOAD
     if (record.status === "DELAY - STATUS BARANG OVERLOAD") {
       return (
-        <Grid
-          md={12}
-        >{`Customer *${record?.name}* yth, kami menginformasikan bahwa barang no *${record?.salesOrder}* dengan item *${record?.item}* Estimasi awal *${record?.estimatedDate}* mengalami kemunduran Estimasi dikarenakan adanya *Overload Container* dipelabuhan Transit Indonesia. Maka estimasi selanjutnya *${record?.newEstimatedDate}*, Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu informasi selanjutnyya. Terima kasih.`}</Grid>
+        <Grid md={12}>{`Customer *${
+          record?.name
+        }* yth, kami menginformasikan bahwa barang no *${
+          record?.salesOrder
+        }* dengan item *${record?.item}* Estimasi awal *${moment(
+          record?.estimatedDate
+        ).format(
+          "DD MMMM YYYY"
+        )}* mengalami kemunduran Estimasi dikarenakan adanya *Overload Container* dipelabuhan Transit Indonesia. Maka estimasi selanjutnya *${moment(
+          record?.newEstimatedDate
+        ).format(
+          "DD MMMM YYYY"
+        )}*, Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu informasi selanjutnyya. Terima kasih.`}</Grid>
       );
     } else {
       return <Grid md={12}>{record?.status}</Grid>;
