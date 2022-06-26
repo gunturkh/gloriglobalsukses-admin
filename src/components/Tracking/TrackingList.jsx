@@ -170,7 +170,6 @@ const TrackingBulkActionButtons = (props) => (
 
 export const TrackingList = (props) => {
   const permissions = localStorage.getItem("permissions");
-  console.log("permissions", permissions);
   const isSmall = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const postRowStyle = (record) => ({
     backgroundColor: record.read === false ? "rgba(0,0,0,0.2)" : "white",
