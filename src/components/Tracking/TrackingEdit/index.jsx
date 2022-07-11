@@ -194,8 +194,8 @@ export const TrackingEdit = (props) => (
                             name: "SUDAH TIBA DIGUDANG CHINA",
                           },
                           {
-                            id: "BARANG LOADING BATAM - JAKARTA",
-                            name: "BARANG LOADING BATAM - JAKARTA",
+                            id: "BARANG LOADING CHINA - JAKARTA",
+                            name: "BARANG LOADING CHINA - JAKARTA",
                           },
                           {
                             id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
@@ -263,13 +263,20 @@ export const TrackingEdit = (props) => (
               </FormDataConsumer>
               <FormDataConsumer>
                 {({ formData, ...rest }) =>
-                  formData.status === "BARANG LOADING BATAM - JAKARTA" && (
+                  formData.status === "BARANG LOADING CHINA - JAKARTA" && (
                     <Grid md={12} paddingX={2}>
                       <DateInput
                         fullWidth
                         source="estimatedDate"
                         label="Tanggal Perkiraan Barang Sampai"
                         {...rest}
+                      />
+                      <TextInput
+                        fullWidth
+                        source="containerNumber"
+                        label="Nomor Container"
+                        multiline
+                        resettable
                       />
                     </Grid>
                   )
@@ -456,8 +463,8 @@ export const TrackingEdit = (props) => (
                       );
                     }
 
-                    // BARANG LOADING BATAM - JAKARTA
-                    if (formData.status === "BARANG LOADING BATAM - JAKARTA") {
+                    // BARANG LOADING CHINA - JAKARTA
+                    if (formData.status === "BARANG LOADING CHINA - JAKARTA") {
                       return (
                         <Grid md={12}>{`Customer *${
                           formData?.name
@@ -465,7 +472,7 @@ export const TrackingEdit = (props) => (
                           formData?.salesOrder
                         }* dengan item *${formData?.item}* dengan resi *${
                           formData?.resi
-                        }* sudah di loading dan akan tiba di gudang Jakarta dengan estimasi *${moment(
+                        }* sudah di loading dengan nomor Container *${formData?.containerNumber}* dan akan tiba di gudang Jakarta dengan estimasi *${moment(
                           formData?.estimatedDate
                         ).format(
                           "DD MMMM YYYY"

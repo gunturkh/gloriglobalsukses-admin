@@ -119,8 +119,8 @@ const WhatsappPreviewField = () => {
       );
     }
 
-    // BARANG LOADING BATAM - JAKARTA
-    if (record.status === "BARANG LOADING BATAM - JAKARTA") {
+    // BARANG LOADING CHINA - JAKARTA
+    if (record.status === "BARANG LOADING CHINA - JAKARTA") {
       return (
         <Grid md={12}>{`Customer *${
           record?.name
@@ -297,8 +297,8 @@ export const TrackingShow = (props) => {
               name: "SUDAH TIBA DIGUDANG CHINA",
             },
             {
-              id: "BARANG LOADING BATAM - JAKARTA",
-              name: "BARANG LOADING BATAM - JAKARTA",
+              id: "BARANG LOADING CHINA - JAKARTA",
+              name: "BARANG LOADING CHINA - JAKARTA",
             },
             {
               id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",

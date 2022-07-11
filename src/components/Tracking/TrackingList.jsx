@@ -124,8 +124,8 @@ const trackingFilters = [
         name: "SUDAH TIBA DIGUDANG CHINA",
       },
       {
-        id: "BARANG LOADING BATAM - JAKARTA",
-        name: "BARANG LOADING BATAM - JAKARTA",
+        id: "BARANG LOADING CHINA - JAKARTA",
+        name: "BARANG LOADING CHINA - JAKARTA",
       },
       {
         id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
