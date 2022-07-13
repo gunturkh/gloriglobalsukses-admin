@@ -93,6 +93,7 @@ const customDataProvider = {
       params?.data?.status !== "SUDAH DIPESAN DAN BARANG PRODUKSI"
     )
       delete params.data.productionDays;
+    if (!params?.data?.setStatusManually && params?.data?.customStatusMessage === "") delete params.data.customStatusMessage;
     console.log("params.data after delete daysToSendReminder", params?.data);
 
     const imagesURL = [];
@@ -173,6 +174,7 @@ const customDataProvider = {
       params?.data?.status !== "SUDAH DIPESAN DAN BARANG PRODUKSI"
     )
       delete params.data.productionDays;
+    if (!params?.data?.setStatusManually && params?.data?.customStatusMessage === "") delete params.data.customStatusMessage;
     console.log("params.data after delete daysToSendReminder", params?.data);
 
     const imagesURL = [];

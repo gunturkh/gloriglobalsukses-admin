@@ -192,15 +192,83 @@ export const TrackingCreate = (props) => {
                         />
                       </Grid>
                     ) : (
-                      <Grid md={12} paddingX={2}>
-                        <TextInput
-                          fullWidth
-                          source="status"
-                          label="Status Manual"
-                          multiline
-                          resettable
-                        />
-                      </Grid>
+                      <>
+                        <Grid md={12} paddingX={2}>
+                          <SelectInput
+                            required
+                            fullWidth
+                            source="status"
+                            helperText={
+                              formData?.status !==
+                              "BARANG KOMPLIT ITEM & SUDAH CLEAR DP"
+                                ? `Sistem akan mereset warna data tracking pada tanggal ${moment()
+                                    .add(
+                                      daysToSendReminderDefaultValue(formData),
+                                      "days"
+                                    )
+                                    .startOf("day")
+                                    .format(
+                                      "DD MMM YYYY HH:mm a"
+                                    )} (${daysToSendReminderDefaultValue(
+                                    formData
+                                  )} hari dari sekarang)`
+                                : ""
+                            }
+                            choices={[
+                              {
+                                id: "STATUS ORDERAN SUDAH DITERIMA",
+                                name: "STATUS ORDERAN SUDAH DITERIMA",
+                              },
+                              {
+                                id: "SUDAH DIPESAN DAN BARANG READY",
+                                name: "SUDAH DIPESAN DAN BARANG READY",
+                              },
+                              {
+                                id: "SUDAH DIPESAN DAN BARANG PRODUKSI",
+                                name: "SUDAH DIPESAN DAN BARANG PRODUKSI",
+                              },
+                              {
+                                id: "SUDAH DIKIRIM VENDOR KE GUDANG CHINA",
+                                name: "SUDAH DIKIRIM VENDOR KE GUDANG CHINA",
+                              },
+                              {
+                                id: "SUDAH TIBA DIGUDANG CHINA",
+                                name: "SUDAH TIBA DIGUDANG CHINA",
+                              },
+                              {
+                                id: "BARANG LOADING CHINA - JAKARTA",
+                                name: "BARANG LOADING CHINA - JAKARTA",
+                              },
+                              {
+                                id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+                                name: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+                              },
+                              {
+                                id: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+                                name: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+                              },
+                              {
+                                id: "DELAY - RANDOM CHECK CHINA",
+                                name: "DELAY - RANDOM CHECK CHINA",
+                              },
+                              {
+                                id: "DELAY - STATUS BARANG OVERLOAD",
+                                name: "DELAY - STATUS BARANG OVERLOAD",
+                              },
+                            ]}
+                          />
+                        </Grid>
+                        <Grid md={12} paddingX={2}>
+                          <TextInput
+                            required
+                            fullWidth
+                            source="customStatusMessage"
+                            label="Ketik Isi WA untuk Status Manual Disini"
+                            multiline
+                            resettable
+                          />
+                        </Grid>
+                      </>
                     )
                   }
                 </FormDataConsumer>
@@ -372,171 +440,182 @@ export const TrackingCreate = (props) => {
                 <Box mt={1}>
                   <FormDataConsumer>
                     {({ formData }) => {
-                      // STATUS ORDERAN SUDAH DITERIMA
-                      if (formData.status === "STATUS ORDERAN SUDAH DITERIMA") {
-                        return (
-                          <Grid
-                            md={12}
-                          >{`Customer *${formData?.name}* yth, Terima kasih sudah berbelanja, orderan anda dengan *${formData?.salesOrder}* barang *${formData?.item}* sudah kami terima dan akan segera diproses, mohon tunggu informasi selanjutnya. Terima kasih.`}</Grid>
-                        );
-                      }
+                      if (!formData.setStatusManually) {
+                        // STATUS ORDERAN SUDAH DITERIMA
+                        if (
+                          formData.status === "STATUS ORDERAN SUDAH DITERIMA"
+                        ) {
+                          return (
+                            <Grid
+                              md={12}
+                            >{`Customer *${formData?.name}* yth, Terima kasih sudah berbelanja, orderan anda dengan *${formData?.salesOrder}* barang *${formData?.item}* sudah kami terima dan akan segera diproses, mohon tunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          );
+                        }
 
-                      // SUDAH DIPESAN DAN BARANG READY
-                      if (
-                        formData.status === "SUDAH DIPESAN DAN BARANG READY"
-                      ) {
-                        return (
-                          <Grid md={12}>{`Customer *${
-                            formData?.name
-                          }* yth, kami menginformasikan bahwa barang no *${
-                            formData?.salesOrder
-                          }* dengan item *${
-                            formData?.item
-                          }* sudah dipesan & sedang dalam proses pengemasan pada tanggal ${moment(
-                            formData?.customerOrderDate
-                          ).format(
-                            "DD MMMM YYYY"
-                          )}. Ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
-                        );
-                      }
+                        // SUDAH DIPESAN DAN BARANG READY
+                        if (
+                          formData.status === "SUDAH DIPESAN DAN BARANG READY"
+                        ) {
+                          return (
+                            <Grid md={12}>{`Customer *${
+                              formData?.name
+                            }* yth, kami menginformasikan bahwa barang no *${
+                              formData?.salesOrder
+                            }* dengan item *${
+                              formData?.item
+                            }* sudah dipesan & sedang dalam proses pengemasan pada tanggal ${moment(
+                              formData?.customerOrderDate
+                            ).format(
+                              "DD MMMM YYYY"
+                            )}. Ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          );
+                        }
 
-                      // SUDAH DIPESAN DAN BARANG PRODUKSI
-                      if (
-                        formData.status === "SUDAH DIPESAN DAN BARANG PRODUKSI"
-                      ) {
-                        return (
-                          <Grid md={12}>{`Customer *${
-                            formData?.name
-                          }* yth, kami menginformasikan bahwa barang no *${
-                            formData?.salesOrder
-                          }* dengan item *${
-                            formData?.item
-                          }* sudah dipesan pada tanggal ${moment(
-                            formData?.customerOrderDate
-                          ).format(
-                            "DD MMMM YYYY"
-                          )} dan dalam proses *produksi ${
-                            formData?.productionDays
-                          } hari*. Kemungkinan akan mengalami keterlambatan pengiriman dikarenakan adanya proses produksi tersebut. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
-                        );
-                      }
+                        // SUDAH DIPESAN DAN BARANG PRODUKSI
+                        if (
+                          formData.status ===
+                          "SUDAH DIPESAN DAN BARANG PRODUKSI"
+                        ) {
+                          return (
+                            <Grid md={12}>{`Customer *${
+                              formData?.name
+                            }* yth, kami menginformasikan bahwa barang no *${
+                              formData?.salesOrder
+                            }* dengan item *${
+                              formData?.item
+                            }* sudah dipesan pada tanggal ${moment(
+                              formData?.customerOrderDate
+                            ).format(
+                              "DD MMMM YYYY"
+                            )} dan dalam proses *produksi ${
+                              formData?.productionDays
+                            } hari*. Kemungkinan akan mengalami keterlambatan pengiriman dikarenakan adanya proses produksi tersebut. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          );
+                        }
 
-                      // SUDAH DIKIRIM VENDOR KE GUDANG CHINA
-                      if (
-                        formData.status ===
-                        "SUDAH DIKIRIM VENDOR KE GUDANG CHINA"
-                      ) {
-                        return (
-                          <Grid
-                            md={12}
-                          >{`Customer *${formData?.name}* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder}* dengan item *${formData?.item}* sudah dikirim dengan nomor *resi china lokal ${formData?.resi}* dan akan tiba di Gudang China dalam waktu 4-5 hari. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
-                        );
-                      }
+                        // SUDAH DIKIRIM VENDOR KE GUDANG CHINA
+                        if (
+                          formData.status ===
+                          "SUDAH DIKIRIM VENDOR KE GUDANG CHINA"
+                        ) {
+                          return (
+                            <Grid
+                              md={12}
+                            >{`Customer *${formData?.name}* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder}* dengan item *${formData?.item}* sudah dikirim dengan nomor *resi china lokal ${formData?.resi}* dan akan tiba di Gudang China dalam waktu 4-5 hari. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          );
+                        }
 
-                      // SUDAH TIBA DIGUDANG CHINA
-                      if (formData.status === "SUDAH TIBA DIGUDANG CHINA") {
-                        return (
-                          <Grid
-                            md={12}
-                          >{`Customer *${formData?.name}* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder}* dengan item *${formData?.item}* sudah tiba di Gudang China dengan resi china lokal *${formData?.resi}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
-                        );
-                      }
+                        // SUDAH TIBA DIGUDANG CHINA
+                        if (formData.status === "SUDAH TIBA DIGUDANG CHINA") {
+                          return (
+                            <Grid
+                              md={12}
+                            >{`Customer *${formData?.name}* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder}* dengan item *${formData?.item}* sudah tiba di Gudang China dengan resi china lokal *${formData?.resi}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          );
+                        }
 
-                      // BARANG LOADING CHINA - JAKARTA
-                      if (
-                        formData.status === "BARANG LOADING CHINA - JAKARTA"
-                      ) {
-                        return (
-                          <Grid md={12}>{`Customer *${
-                            formData?.name
-                          }* yth, kami menginformasikan bahwa barang no *${
-                            formData?.salesOrder
-                          }* dengan item *${formData?.item}* dengan resi *${
-                            formData?.resi
-                          }* sudah di loading dengan nomor Container *${formData?.containerNumber}* dan akan tiba di gudang Jakarta dengan estimasi *${moment(
-                            formData?.estimatedDate
-                          ).format(
-                            "DD MMMM YYYY"
-                          )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
-                        );
-                      }
+                        // BARANG LOADING CHINA - JAKARTA
+                        if (
+                          formData.status === "BARANG LOADING CHINA - JAKARTA"
+                        ) {
+                          return (
+                            <Grid md={12}>{`Customer *${
+                              formData?.name
+                            }* yth, kami menginformasikan bahwa barang no *${
+                              formData?.salesOrder
+                            }* dengan item *${formData?.item}* dengan resi *${
+                              formData?.resi
+                            }* sudah di loading dengan nomor Container *${
+                              formData?.containerNumber
+                            }* dan akan tiba di gudang Jakarta dengan estimasi *${moment(
+                              formData?.estimatedDate
+                            ).format(
+                              "DD MMMM YYYY"
+                            )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          );
+                        }
 
-                      // BARANG KOMPLIT ITEM & BELUM CLEAR DP
-                      if (
-                        formData.status ===
-                        "BARANG KOMPLIT ITEM & BELUM CLEAR DP"
-                      ) {
-                        return (
-                          <Grid md={12}>{`Customer *${
-                            formData?.name
-                          }* yth, kami menginformasikan bahwa barang no *${
-                            formData?.salesOrder
-                          }* dengan item *${formData?.item}* atas *${
-                            formData?.resi
-                          }* tiba di Gudang Jakarta pada tanggal  *${moment(
-                            formData?.estimatedDate
-                          ).format(
-                            "DD MMMM YYYY"
-                          )}* dan akan segera diproses pengiriman ke alamat anda. Mohon untuk segera melakukan pelunasan *sisa DP 30%* sebesar *IDR ${rupiah(
-                            formData?.remainingDownPaymentAmount
-                          )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
-                        );
-                      }
+                        // BARANG KOMPLIT ITEM & BELUM CLEAR DP
+                        if (
+                          formData.status ===
+                          "BARANG KOMPLIT ITEM & BELUM CLEAR DP"
+                        ) {
+                          return (
+                            <Grid md={12}>{`Customer *${
+                              formData?.name
+                            }* yth, kami menginformasikan bahwa barang no *${
+                              formData?.salesOrder
+                            }* dengan item *${formData?.item}* atas *${
+                              formData?.resi
+                            }* tiba di Gudang Jakarta pada tanggal  *${moment(
+                              formData?.estimatedDate
+                            ).format(
+                              "DD MMMM YYYY"
+                            )}* dan akan segera diproses pengiriman ke alamat anda. Mohon untuk segera melakukan pelunasan *sisa DP 30%* sebesar *IDR ${rupiah(
+                              formData?.remainingDownPaymentAmount
+                            )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          );
+                        }
 
-                      // BARANG KOMPLIT ITEM & SUDAH CLEAR DP
-                      if (
-                        formData.status ===
-                        "BARANG KOMPLIT ITEM & SUDAH CLEAR DP"
-                      ) {
-                        return (
-                          <Grid md={12}>{`Customer *${
-                            formData?.name
-                          }* yth, kami menginformasikan bahwa barang no *${
-                            formData?.salesOrder
-                          }* dengan item *${
-                            formData?.item
-                          }* tiba di Gudang Jakarta pada tanggal  *${moment(
-                            formData?.estimatedDate
-                          ).format(
-                            "DD MMMM YYYY"
-                          )}* dan sudah dikirimkan dengan nomor resi SENTRAL CARGO *${
-                            formData?.resi
-                          }* .Jangan lupa Untuk membuat video unboxing jika barang telah sampai untuk menghindari kesalahan dalam pengiriman. Ditunggu orderan selanjutnya, Terima kasih.`}</Grid>
-                        );
-                      }
+                        // BARANG KOMPLIT ITEM & SUDAH CLEAR DP
+                        if (
+                          formData.status ===
+                          "BARANG KOMPLIT ITEM & SUDAH CLEAR DP"
+                        ) {
+                          return (
+                            <Grid md={12}>{`Customer *${
+                              formData?.name
+                            }* yth, kami menginformasikan bahwa barang no *${
+                              formData?.salesOrder
+                            }* dengan item *${
+                              formData?.item
+                            }* tiba di Gudang Jakarta pada tanggal  *${moment(
+                              formData?.estimatedDate
+                            ).format(
+                              "DD MMMM YYYY"
+                            )}* dan sudah dikirimkan dengan nomor resi SENTRAL CARGO *${
+                              formData?.resi
+                            }* .Jangan lupa Untuk membuat video unboxing jika barang telah sampai untuk menghindari kesalahan dalam pengiriman. Ditunggu orderan selanjutnya, Terima kasih.`}</Grid>
+                          );
+                        }
 
-                      // DELAY - RANDOM CHECK CHINA
-                      if (formData.status === "DELAY - RANDOM CHECK CHINA") {
-                        return (
-                          <Grid
-                            md={12}
-                          >{`Customer *${formData?.name}* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder}* dengan item *${formData?.item}* akan mengalami kemunduran estimasi tiba di Indonesia dikarenakan adanya *Random Check* di Custom China maka dari itu untuk estimasi selanjutnya akan kami informasikan kembali. Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu. Terima kasih.`}</Grid>
-                        );
-                      }
+                        // DELAY - RANDOM CHECK CHINA
+                        if (formData.status === "DELAY - RANDOM CHECK CHINA") {
+                          return (
+                            <Grid
+                              md={12}
+                            >{`Customer *${formData?.name}* yth, kami menginformasikan bahwa barang no *${formData?.salesOrder}* dengan item *${formData?.item}* akan mengalami kemunduran estimasi tiba di Indonesia dikarenakan adanya *Random Check* di Custom China maka dari itu untuk estimasi selanjutnya akan kami informasikan kembali. Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu. Terima kasih.`}</Grid>
+                          );
+                        }
 
-                      // DELAY - STATUS BARANG OVERLOAD
-                      if (
-                        formData.status === "DELAY - STATUS BARANG OVERLOAD"
-                      ) {
-                        return (
-                          <Grid md={12}>{`Customer *${
-                            formData?.name
-                          }* yth, kami menginformasikan bahwa barang no *${
-                            formData?.salesOrder
-                          }* dengan item *${
-                            formData?.item
-                          }* Estimasi awal *${moment(
-                            formData?.estimatedDate
-                          ).format(
-                            "DD MMMM YYYY"
-                          )}* mengalami kemunduran Estimasi dikarenakan adanya *Overload Container* dipelabuhan Transit Indonesia. Maka estimasi selanjutnya *${moment(
-                            formData?.newEstimatedDate
-                          ).format(
-                            "DD MMMM YYYY"
-                          )}*, Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu informasi selanjutnyya. Terima kasih.`}</Grid>
-                        );
+                        // DELAY - STATUS BARANG OVERLOAD
+                        if (
+                          formData.status === "DELAY - STATUS BARANG OVERLOAD"
+                        ) {
+                          return (
+                            <Grid md={12}>{`Customer *${
+                              formData?.name
+                            }* yth, kami menginformasikan bahwa barang no *${
+                              formData?.salesOrder
+                            }* dengan item *${
+                              formData?.item
+                            }* Estimasi awal *${moment(
+                              formData?.estimatedDate
+                            ).format(
+                              "DD MMMM YYYY"
+                            )}* mengalami kemunduran Estimasi dikarenakan adanya *Overload Container* dipelabuhan Transit Indonesia. Maka estimasi selanjutnya *${moment(
+                              formData?.newEstimatedDate
+                            ).format(
+                              "DD MMMM YYYY"
+                            )}*, Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu informasi selanjutnyya. Terima kasih.`}</Grid>
+                          );
+                        } else {
+                          return <Grid md={12}>{formData?.status}</Grid>;
+                        }
                       } else {
-                        return <Grid md={12}>{formData?.status}</Grid>;
+                        return (
+                          <Grid md={12}>{formData?.customStatusMessage}</Grid>
+                        );
                       }
                     }}
                   </FormDataConsumer>
