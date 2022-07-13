@@ -607,7 +607,7 @@ export const TrackingCreate = (props) => {
                               formData?.newEstimatedDate
                             ).format(
                               "DD MMMM YYYY"
-                            )}*, Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu informasi selanjutnyya. Terima kasih.`}</Grid>
+                            )}*, Kami segenap perusahaan memohon maaf sebesar besarnya atas kemunduran estimasi tersebut. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
                           );
                         } else {
                           return <Grid md={12}>{formData?.status}</Grid>;
