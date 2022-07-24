@@ -1,6 +1,6 @@
 [[redirects]]
-  from = "https://185.201.8.171:4000/v1"
-  to = "http://185.201.8.171:4000/v1"
+  from = "https://185.201.8.171:4000/v1/*"
+  to = "http://185.201.8.171:4000/v1/*"
   status = 200
   force = true
 
