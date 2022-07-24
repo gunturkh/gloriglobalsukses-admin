@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "/"
+  from = "https://185.201.8.171:4000"
   to = "http://185.201.8.171:4000"
   status = 200
   force = true
