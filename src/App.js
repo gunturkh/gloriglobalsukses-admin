@@ -227,7 +227,6 @@ const customDataProvider = {
 };
 
 const App = () => {
-  // return <Admin authProvider={authProvider} dashboard={Dashboard} dataProvider={dataProvider} >
   const parsedClientInfoFromLocalStorage =
     JSON.parse(localStorage.getItem("clientInfo")) || {};
   const checkSavedClientInfo =
