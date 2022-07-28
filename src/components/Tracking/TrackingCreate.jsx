@@ -173,8 +173,12 @@ export const TrackingCreate = (props) => {
                               name: "BARANG LOADING CHINA - JAKARTA",
                             },
                             {
-                              id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
-                              name: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
+                              id: "BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP",
+                              name: "BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP",
+                            },
+                            {
+                              id: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
+                              name: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
                             },
                             {
                               id: "BARANG KOMPLIT ITEM & BELUM CLEAR DP",
@@ -238,6 +242,10 @@ export const TrackingCreate = (props) => {
                               {
                                 id: "BARANG LOADING CHINA - JAKARTA",
                                 name: "BARANG LOADING CHINA - JAKARTA",
+                              },
+                              {
+                                id: "BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP",
+                                name: "BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP",
                               },
                               {
                                 id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
@@ -532,6 +540,28 @@ export const TrackingCreate = (props) => {
                             ).format(
                               "DD MMMM YYYY"
                             )}*. Mohon ditunggu informasi selanjutnya. Terima kasih.`}</Grid>
+                          );
+                        }
+
+                        // BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP
+                        if (
+                          formData.status ===
+                          "BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP"
+                        ) {
+                          return (
+                            <Grid md={12}>{`Customer *${
+                              formData?.name
+                            }* yth, kami menginformasikan bahwa barang no *${
+                              formData?.salesOrder
+                            }* dengan item *${formData?.item}* dengan resi *${
+                              formData?.resi
+                            }* tiba di Gudang Jakarta *${formData?.cartonAmount}*, tanggal  *${moment(
+                              formData?.estimatedDate
+                            ).format(
+                              "DD MMMM YYYY"
+                            )}*. Mohon untuk segera melakukan pelunasan *sisa DP 30%* untuk proses pengiriman barang sebesar *IDR ${rupiah(
+                              formData?.remainingDownPaymentAmount
+                            )}*. Wajib mengirimkan bukti transfer ke *Admin Glori*. Demikian untuk kenyamanan bersama & Terima kasih atas kepercayaannya.`}</Grid>
                           );
                         }
 

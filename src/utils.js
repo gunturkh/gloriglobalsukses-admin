@@ -16,6 +16,9 @@ const daysToSendReminderDefaultValue = (trackingData) => {
     case 'BARANG LOADING CHINA - JAKARTA':
       return setDaysReminderManually ? daysToSendReminder : 7
 
+    case 'BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP':
+      return setDaysReminderManually ? daysToSendReminder : 1
+
     case 'BARANG KOMPLIT ITEM & BELUM CLEAR DP':
       return setDaysReminderManually ? daysToSendReminder : 1
 

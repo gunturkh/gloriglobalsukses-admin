@@ -136,6 +136,25 @@ const WhatsappPreviewField = () => {
       );
     }
 
+    // BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP
+    if (record.status === "BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP") {
+      return (
+        <Grid md={12}>{`Customer *${
+          record?.name
+        }* yth, kami menginformasikan bahwa barang no *${
+          record?.salesOrder
+        }* dengan item *${record?.item}* dengan resi *${
+          record?.resi
+        }* tiba di Gudang Jakarta *${record?.cartonAmount}*, tanggal *${moment(
+          record?.estimatedDate
+        ).format(
+          "DD MMMM YYYY"
+        )}*. Mohon untuk segera melakukan pelunasan *sisa DP 30%* untuk proses pengiriman barang sebesar *IDR ${rupiah(
+          record?.remainingDownPaymentAmount
+        )}*. Wajib mengirimkan bukti transfer ke *Admin Glori*. Demikian untuk kenyamanan bersama & Terima kasih atas kepercayaannya.`}</Grid>
+      );
+    }
+
     // BARANG KOMPLIT ITEM & BELUM CLEAR DP
     if (record.status === "BARANG KOMPLIT ITEM & BELUM CLEAR DP") {
       return (

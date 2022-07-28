@@ -128,6 +128,10 @@ const trackingFilters = [
         name: "BARANG LOADING CHINA - JAKARTA",
       },
       {
+        id: "BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP",
+        name: "BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP",
+      },
+      {
         id: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
         name: "BARANG KOMPLIT ITEM & SUDAH CLEAR DP",
       },
