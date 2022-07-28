@@ -336,6 +336,27 @@ export const TrackingCreate = (props) => {
                 <FormDataConsumer>
                   {({ formData, ...rest }) =>
                     formData.status ===
+                      "BARANG BELUM KOMPLIT ITEM & BELUM CLEAR DP" && (
+                      <Grid md={12} paddingX={2}>
+                        <DateInput
+                          fullWidth
+                          source="estimatedDate"
+                          label="Tanggal Barang Sampai"
+                          {...rest}
+                        />
+                        <NumberInput
+                          fullWidth
+                          source="remainingDownPaymentAmount"
+                          label="Sisa DP"
+                          {...rest}
+                        />
+                      </Grid>
+                    )
+                  }
+                </FormDataConsumer>
+                <FormDataConsumer>
+                  {({ formData, ...rest }) =>
+                    formData.status ===
                       "BARANG KOMPLIT ITEM & BELUM CLEAR DP" && (
                       <Grid md={12} paddingX={2}>
                         <DateInput
