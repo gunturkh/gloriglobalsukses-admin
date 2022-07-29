@@ -145,13 +145,13 @@ const WhatsappPreviewField = () => {
           record?.salesOrder
         }* dengan item *${record?.item}* dengan resi *${
           record?.resi
-        }* tiba di Gudang Jakarta *${record?.cartonAmount}*, tanggal *${moment(
+        }* tiba di Gudang Jakarta *[${record?.cartonAmount}]ctn*, tanggal *${moment(
           record?.estimatedDate
         ).format(
           "DD MMMM YYYY"
         )}*. Mohon untuk segera melakukan pelunasan *sisa DP 30%* untuk proses pengiriman barang sebesar *IDR ${rupiah(
           record?.remainingDownPaymentAmount
-        )}*. Wajib mengirimkan bukti transfer ke *Admin Glori*. Demikian untuk kenyamanan bersama & Terima kasih atas kepercayaannya.`}</Grid>
+        ).replace('Rp', '')}*. Wajib mengirimkan bukti transfer ke *Admin Glori*. Demikian untuk kenyamanan bersama & Terima kasih atas kepercayaannya.`}</Grid>
       );
     }
 

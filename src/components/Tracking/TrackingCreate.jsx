@@ -576,13 +576,13 @@ export const TrackingCreate = (props) => {
                               formData?.salesOrder
                             }* dengan item *${formData?.item}* dengan resi *${
                               formData?.resi
-                            }* tiba di Gudang Jakarta *${formData?.cartonAmount}*, tanggal  *${moment(
+                            }* tiba di Gudang Jakarta *[${formData?.cartonAmount}ctn]*, tanggal *${moment(
                               formData?.estimatedDate
                             ).format(
                               "DD MMMM YYYY"
                             )}*. Mohon untuk segera melakukan pelunasan *sisa DP 30%* untuk proses pengiriman barang sebesar *IDR ${rupiah(
                               formData?.remainingDownPaymentAmount
-                            )}*. Wajib mengirimkan bukti transfer ke *Admin Glori*. Demikian untuk kenyamanan bersama & Terima kasih atas kepercayaannya.`}</Grid>
+                            ).replace('Rp', '')}*. Wajib mengirimkan bukti transfer ke *Admin Glori*. Demikian untuk kenyamanan bersama & Terima kasih atas kepercayaannya.`}</Grid>
                           );
                         }
 
