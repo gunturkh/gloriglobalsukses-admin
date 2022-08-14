@@ -40,11 +40,26 @@ const TrackingShowActions = ({ basePath, data, handleClick }) => {
     </TopToolbar>
   );
 };
+const AdditionalPhoneNumbersField = () => {
+  const record = useRecordContext();
+  return (
+    <>
+      <p style={{ fontSize: "12px" }}>Additional Phone</p>
+      <ul>
+        {record.additionalPhoneNumbers.map((phoneNumber, idx) => (
+          <li key={idx} style={{ marginBottom: "10px", fontSize: "14px" }}>
+            <div>{phoneNumber.phone}</div>
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+};
 const HistoryField = () => {
   const record = useRecordContext();
   return (
     <>
-      <p style={{ fontSize: "12px" }}>History</p>
+      <p style={{ fontSize: "12px" }}></p>
       <ul>
         {record.history.map((item, idx) => (
           <li key={idx} style={{ marginBottom: "10px", fontSize: "14px" }}>
@@ -145,13 +160,16 @@ const WhatsappPreviewField = () => {
           record?.salesOrder
         }* dengan item *${record?.item}* dengan resi *${
           record?.resi
-        }* tiba di Gudang Jakarta *[${record?.cartonAmount}]ctn*, tanggal *${moment(
-          record?.estimatedDate
-        ).format(
+        }* tiba di Gudang Jakarta *[${
+          record?.cartonAmount
+        }]ctn*, tanggal *${moment(record?.estimatedDate).format(
           "DD MMMM YYYY"
         )}*. Mohon untuk segera melakukan pelunasan *sisa DP 30%* untuk proses pengiriman barang sebesar *IDR ${rupiah(
           record?.remainingDownPaymentAmount
-        ).replace('Rp', '')}*. Wajib mengirimkan bukti transfer ke *Admin Glori*. Demikian untuk kenyamanan bersama & Terima kasih atas kepercayaannya.`}</Grid>
+        ).replace(
+          "Rp",
+          ""
+        )}*. Wajib mengirimkan bukti transfer ke *Admin Glori*. Demikian untuk kenyamanan bersama & Terima kasih atas kepercayaannya.`}</Grid>
       );
     }
 
@@ -288,6 +306,7 @@ export const TrackingShow = (props) => {
       <SimpleShowLayout>
         <TextField source="name" />
         <TextField source="phone" />
+        <AdditionalPhoneNumbersField />
         <TextField source="address" />
         <TextField source="item" />
         <TextField source="itemDetail" label="Keterangan Barang" />

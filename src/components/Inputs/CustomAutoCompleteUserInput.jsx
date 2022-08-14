@@ -1,6 +1,12 @@
 import * as React from "react";
 import { Grid } from "@mui/material";
-import { TextInput, useGetList, AutocompleteInput } from "react-admin";
+import {
+  TextInput,
+  useGetList,
+  AutocompleteInput,
+  ArrayInput,
+  SimpleFormIterator,
+} from "react-admin";
 import { useFormContext, useWatch } from "react-hook-form";
 
 export const CustomAutoCompleteUserInput = () => {
@@ -22,6 +28,7 @@ export const CustomAutoCompleteUserInput = () => {
                 name: currentValue?.name,
                 phone: currentValue?.phone,
                 address: currentValue?.address,
+                additionalPhoneNumbers: currentValue?.additionalPhoneNumbers,
               },
             ];
           }
@@ -36,6 +43,10 @@ export const CustomAutoCompleteUserInput = () => {
       );
       setValue("phone", AutoCompletePhoneFieldValue?.phone);
       setValue("address", AutoCompletePhoneFieldValue?.address);
+      setValue(
+        "additionalPhoneNumbers",
+        AutoCompletePhoneFieldValue?.additionalPhoneNumbers
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [name, setValue]);
@@ -68,6 +79,13 @@ export const CustomAutoCompleteUserInput = () => {
       </Grid>
       <Grid md={6} paddingX={2}>
         <TextInput fullWidth label="No HP" source="phone" />
+      </Grid>
+      <Grid md={12} paddingX={2}>
+        <ArrayInput label="No HP Tambahan" source="additionalPhoneNumbers">
+          <SimpleFormIterator>
+            <TextInput fullWidth label="No HP" source="phone" />
+          </SimpleFormIterator>
+        </ArrayInput>
       </Grid>
       <Grid md={6} paddingX={2}>
         <TextInput fullWidth source="address" label="Alamat" />
