@@ -66,6 +66,7 @@ const exporter = (trackingDatas) => {
 };
 
 const trackingFilters = [
+  <TextInput source="name" label="Nama" />,
   <DateInput
     label="Tanggal Customer Order"
     source="customerOrderDate"
