@@ -63,7 +63,7 @@ const HistoryField = () => {
       <ul>
         {record.history.map((item, idx) => (
           <li key={idx} style={{ marginBottom: "10px", fontSize: "14px" }}>
-            <div>{moment(item.createdAt).format("DD-MMM-YYYY HH:mm:ss")}</div>
+            <div>{moment(item.updatedAt).format("DD-MMM-YYYY HH:mm:ss")}</div>
             <div>{item.status}</div>
           </li>
         ))}
