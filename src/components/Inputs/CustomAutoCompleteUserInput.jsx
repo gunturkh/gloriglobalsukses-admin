@@ -15,7 +15,7 @@ export const CustomAutoCompleteUserInput = () => {
   const [showAutoCompleteInput, setShowAutoCompleteInput] =
     React.useState(true);
   const { data } = useGetList("tracking", {
-    pagination: { page: 1, perPage: 10000 },
+    pagination: { page: 1, perPage: 3000 },
     sort: { field: "name", order: "ASC" },
   });
   const choices =
