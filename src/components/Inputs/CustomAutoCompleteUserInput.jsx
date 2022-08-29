@@ -8,6 +8,7 @@ import {
   SimpleFormIterator,
 } from "react-admin";
 import { useFormContext, useWatch } from "react-hook-form";
+import _ from "lodash";
 
 export const CustomAutoCompleteUserInput = () => {
   const name = useWatch({ name: "name" });
@@ -32,7 +33,7 @@ export const CustomAutoCompleteUserInput = () => {
     return fetchUtils.fetchJson(url, options);
   };
 
-  const getTrackings = async (inputValue) => {
+  const getTrackings = _.debounce(async (inputValue) => {
     setLoading(true);
     const response = await fetchJson(
       `${apiUrl}/tracking?name=${inputValue}&limit=100&sortBy=name&populate=user`
@@ -59,7 +60,7 @@ export const CustomAutoCompleteUserInput = () => {
 
     setUserData(result);
     return result;
-  };
+  }, 1000);
 
   React.useEffect(() => {
     if (searchData?.length > 2 && !phone) getTrackings(searchData);

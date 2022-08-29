@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "lodash": "^4.17.21",
     "moment": "^2.29.3",
     "prop-types": "^15.8.1",
     "ra-data-json-server": "^3.19.6",
