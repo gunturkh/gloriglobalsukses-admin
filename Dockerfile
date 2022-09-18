@@ -1,12 +1,21 @@
 FROM node:14.17.1-alpine AS builder
 
+ARG REACT_APP_SERVER_URL
+ARG REACT_APP_SOCKET_HOST
+ARG REACT_APP_SOCKET_PATH
+
 WORKDIR /app
 
 COPY . .
 
 RUN yarn install
 
-RUN PUBLIC_URL=/gloriglobalsukses-admin GENERATE_SOURCEMAP=false npm run-script build --prod
+RUN PUBLIC_URL=/gloriglobalsukses-admin \
+REACT_APP_SOCKET_PATH=$REACT_APP_SOCKET_PATH \
+REACT_APP_SOCKET_PATH=$REACT_APP_SOCKET_PATH \
+REACT_APP_SOCKET_PATH=$REACT_APP_SOCKET_PATH \
+GENERATE_SOURCEMAP=false \
+npm run-script build --prod
 
 FROM nginx:alpine
 
