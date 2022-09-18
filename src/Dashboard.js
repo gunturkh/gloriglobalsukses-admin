@@ -5,9 +5,17 @@ import QRCode from "react-qr-code";
 import socketIOClient from "socket.io-client";
 
 const url = process.env.REACT_APP_SERVER_URL;
-const SOCKET_ENDPOINT =
-  process.env.REACT_APP_SOCKET_ENDPOINT || "http://127.0.0.1:4000";
+const SOCKET_HOST =
+  process.env.REACT_APP_SOCKET_HOST || "http://127.0.0.1:4000";
+const SOCKET_PATH =
+  process.env.REACT_APP_SOCKET_PATH || "";
 export const Dashboard = () => {
+  console.log({
+    env: process.env,
+    host: process.env.REACT_APP_SERVER_URL,
+    sockethost: process.env.REACT_APP_SOCKET_HOST,
+    socketpath: process.env.REACT_APP_SOCKET_PATH
+  })
   // const notify = useNotify();
 
   // const parsedClientInfoFromLocalStorage =
@@ -29,7 +37,9 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState(checkSavedQR ? false : true);
 
   useEffect(() => {
-    const socket = socketIOClient(SOCKET_ENDPOINT);
+    const socket = socketIOClient(SOCKET_HOST, {
+      path: SOCKET_PATH
+    });
     socket.on("FromAPI", (data) => {
       setLoading(false);
       setSocketData(data);
@@ -65,7 +75,9 @@ export const Dashboard = () => {
   }, [socketClientData]);
 
   const handleWALogout = async () => {
-    const socket = socketIOClient(SOCKET_ENDPOINT);
+    const socket = socketIOClient(SOCKET_HOST, {
+      path: SOCKET_PATH
+    });
     socket.emit("logout", true);
     setLoading(true);
     localStorage.removeItem("clientInfo");
