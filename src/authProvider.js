@@ -1,6 +1,6 @@
 // import decodeJwt from "jwt-decode";
 // const authURL = "https://gor-orchid-backend-production.up.railway.app/v1/auth";
-const authURL = `${window.location.host}/gloriglobalsukses-backend/v1/auth`;
+const authURL = `https://${window.location.host}/gloriglobalsukses-backend/v1/auth`;
 
 const authProvider = {
   // called when the user attempts to log in

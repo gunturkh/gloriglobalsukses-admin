@@ -270,7 +270,7 @@ export const TrackingShow = (props) => {
     console.log("confirm");
     // const { id } = data;
     const pdf = await fetch(
-      `${window.location.host}/gloriglobalsukses-backend/v1/tracking/getpdf/${id}/${pageCount}`
+      `https://${window.location.host}/gloriglobalsukses-backend/v1/tracking/getpdf/${id}/${pageCount}`
     );
     const blob = await pdf.blob();
     const file = new Blob([blob], { type: "application/pdf" });

@@ -16,7 +16,7 @@ import LoginPage from "./loginPage";
 import moment from "moment";
 import { daysToSendReminderDefaultValue } from "./utils.js";
 
-const apiUrl = `${window.location.host}/gloriglobalsukses-backend/v1`;
+const apiUrl = `https://${window.location.host}/gloriglobalsukses-backend/v1`;
 const fetchJson = (url, options = {}) => {
   if (!options.headers) {
     options.headers = new Headers();
