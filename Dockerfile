@@ -1,14 +1,10 @@
-FROM node:12.11.1-alpine AS builder
+FROM node:14.17.1-alpine AS builder
 
 WORKDIR /app
 
 COPY . .
 
-RUN apk add --no-cache python2
-
-RUN apk add g++ && apk add make
-
-RUN npm install && npm audit fix
+RUN yarn install
 
 RUN PUBLIC_URL=/gloriglobalsukses-admin GENERATE_SOURCEMAP=false npm run-script build --prod
 
