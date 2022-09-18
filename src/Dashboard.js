@@ -10,12 +10,6 @@ const SOCKET_HOST =
 const SOCKET_PATH =
   process.env.REACT_APP_SOCKET_PATH || "";
 export const Dashboard = () => {
-  console.log({
-    env: process.env,
-    host: process.env.REACT_APP_SERVER_URL,
-    sockethost: process.env.REACT_APP_SOCKET_HOST,
-    socketpath: process.env.REACT_APP_SOCKET_PATH
-  })
   // const notify = useNotify();
 
   // const parsedClientInfoFromLocalStorage =
