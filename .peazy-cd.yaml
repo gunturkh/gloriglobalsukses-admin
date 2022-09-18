@@ -1,0 +1,63 @@
+configMap:
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: gloriglobalsukses-admin
+  data:
+    "NODE_ENV": "production"
+    "REACT_APP_SERVER_URL": "https://apps.peazy.dev/gloriglobalsukses-backend/v1"
+    "REACT_APP_SOCKET_ENDPOINT": "https://apps.peazy.dev/gloriglobalsukses-backend"
+service:
+  kind: Service
+  apiVersion: v1
+  metadata:
+    name: gloriglobalsukses-admin
+  spec:
+    selector:
+      app: gloriglobalsukses-admin
+    ports:
+      - protocol: TCP
+        port: 3000
+        targetPort: 80
+        name: http-gloriglobalsukses-admin
+    type: NodePort
+deployment:
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: gloriglobalsukses-admin
+    labels:
+      app: gloriglobalsukses-admin
+  spec:
+    replicas: 1
+    selector:
+      matchLabels:
+        app: gloriglobalsukses-admin
+    template:
+      metadata:
+        labels:
+          app: gloriglobalsukses-admin
+      spec:
+        containers: 
+        - name: gloriglobalsukses-admin
+          image: '{DOCKER_IMAGE_URI}'
+          env:
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: gloriglobalsukses-admin
+                  key: NODE_ENV
+            - name: REACT_APP_SERVER_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: gloriglobalsukses-admin
+                  key: REACT_APP_SERVER_URL
+            - name: REACT_APP_SOCKET_ENDPOINT
+              valueFrom:
+                configMapKeyRef:
+                  name: gloriglobalsukses-admin
+                  key: REACT_APP_SOCKET_ENDPOINT
+          ports:
+            - containerPort: 80
+        imagePullSecrets:
+          - name: regcred
