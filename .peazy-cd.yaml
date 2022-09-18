@@ -1,13 +1,3 @@
-configMap:
-  apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: gloriglobalsukses-admin
-  data:
-    "NODE_ENV": "production"
-    "REACT_APP_SERVER_URL": "https://apps.peazy.dev/gloriglobalsukses-backend/v1"
-    "REACT_APP_SOCKET_HOST": "https://apps.peazy.dev"
-    "REACT_APP_SOCKET_PATH": "gloriglobalsukses-backend"
 service:
   kind: Service
   apiVersion: v1
@@ -42,27 +32,6 @@ deployment:
         containers: 
         - name: gloriglobalsukses-admin
           image: '{DOCKER_IMAGE_URI}'
-          env:
-            - name: NODE_ENV
-              valueFrom:
-                configMapKeyRef:
-                  name: gloriglobalsukses-admin
-                  key: NODE_ENV
-            - name: REACT_APP_SERVER_URL
-              valueFrom:
-                configMapKeyRef:
-                  name: gloriglobalsukses-admin
-                  key: REACT_APP_SERVER_URL
-            - name: REACT_APP_SOCKET_HOST
-              valueFrom:
-                configMapKeyRef:
-                  name: gloriglobalsukses-admin
-                  key: REACT_APP_SOCKET_HOST
-            - name: REACT_APP_SOCKET_PATH
-              valueFrom:
-                configMapKeyRef:
-                  name: gloriglobalsukses-admin
-                  key: REACT_APP_SOCKET_PATH
           ports:
             - containerPort: 80
         imagePullSecrets:

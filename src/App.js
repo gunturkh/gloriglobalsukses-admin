@@ -15,13 +15,8 @@ import simpleRestProvider from "ra-data-simple-rest";
 import LoginPage from "./loginPage";
 import moment from "moment";
 import { daysToSendReminderDefaultValue } from "./utils.js";
-console.log({
-  env: process.env,
-  host: process.env.REACT_APP_SERVER_URL,
-  sockethost: process.env.REACT_APP_SOCKET_HOST,
-  socketpath: process.env.REACT_APP_SOCKET_PATH
-})
-const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
+
+const apiUrl = `${window.location.host}/gloriglobalsukses-backend/v1`;
 const fetchJson = (url, options = {}) => {
   if (!options.headers) {
     options.headers = new Headers();

@@ -4,11 +4,10 @@ import { Loading } from "react-admin";
 import QRCode from "react-qr-code";
 import socketIOClient from "socket.io-client";
 
-const url = process.env.REACT_APP_SERVER_URL;
+const url = `${window.location.host}/gloriglobalsukses-backend/v1`;
 const SOCKET_HOST =
-  process.env.REACT_APP_SOCKET_HOST || "http://127.0.0.1:4000";
-const SOCKET_PATH =
-  process.env.REACT_APP_SOCKET_PATH || "";
+  window.location || "http://127.0.0.1:4000";
+const SOCKET_PATH = '/gloriglobalsukses-backend/socket.io/';
 export const Dashboard = () => {
   // const notify = useNotify();
 
