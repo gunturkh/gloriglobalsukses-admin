@@ -608,7 +608,10 @@ export const TrackingEdit = (props) => (
                             "DD MMMM YYYY"
                           )}*. Mohon untuk segera melakukan pelunasan *sisa DP 30%* untuk proses pengiriman barang sebesar *IDR ${rupiah(
                             formData?.remainingDownPaymentAmount
-                          ).replace('Rp','')}*. Wajib mengirimkan bukti transfer ke *Admin Glori*. Demikian untuk kenyamanan bersama & Terima kasih atas kepercayaannya.`}</Grid>
+                          ).replace(
+                            "Rp",
+                            ""
+                          )}*. Wajib mengirimkan bukti transfer ke *Admin Glori*. Demikian untuk kenyamanan bersama & Terima kasih atas kepercayaannya.`}</Grid>
                         );
                       }
 

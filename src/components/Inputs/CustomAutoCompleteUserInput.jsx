@@ -15,7 +15,7 @@ export const CustomAutoCompleteUserInput = () => {
   const phone = useWatch({ name: "phone" });
   const { setValue } = useFormContext();
   const [showAutoCompleteInput, setShowAutoCompleteInput] =
-    React.useState(true);
+    React.useState(false);
   const [userData, setUserData] = React.useState([]);
   const [searchData, setSearchData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -84,10 +84,13 @@ export const CustomAutoCompleteUserInput = () => {
   }, [name, setValue]);
 
   React.useEffect(() => {
-    if (name?.length === 0) {
+    console.log("name", name);
+    console.log("name length", name?.length);
+    console.log("showAutoCompleteInput", showAutoCompleteInput);
+    if (!name?.length) {
       setShowAutoCompleteInput(true);
     }
-  }, [name]);
+  }, [name, showAutoCompleteInput]);
 
   return (
     <>

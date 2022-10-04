@@ -239,7 +239,7 @@ const App = () => {
       dashboard={Dashboard}
       dataProvider={customDataProvider}
       loginPage={LoginPage}
-      // theme={theme}
+    // theme={theme}
     >
       {/* <Resource
         name="posts"
