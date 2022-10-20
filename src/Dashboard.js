@@ -4,10 +4,14 @@ import { Loading } from "react-admin";
 import QRCode from "react-qr-code";
 import socketIOClient from "socket.io-client";
 
-const url = `https://${window.location.host}/gloriglobalsukses-backend/v1`;
-const SOCKET_HOST =
-  `https://${window.location.host}` || "http://127.0.0.1:4000";
-const SOCKET_PATH = '/gloriglobalsukses-backend/socket.io/';
+// const url = `https://${window.location.host}/gloriglobalsukses-backend/v1`;
+// const SOCKET_HOST =
+//   `https://${window.location.host}` || "http://127.0.0.1:4000";
+// const SOCKET_PATH = '/gloriglobalsukses-backend/socket.io/';
+
+const url = process.env.REACT_APP_SERVER_URL;
+const SOCKET_ENDPOINT =
+  process.env.REACT_APP_SOCKET_ENDPOINT || "http://127.0.0.1:4000";
 export const Dashboard = () => {
   // const notify = useNotify();
 
@@ -30,9 +34,10 @@ export const Dashboard = () => {
   const [loading, setLoading] = useState(checkSavedQR ? false : true);
 
   useEffect(() => {
-    const socket = socketIOClient(SOCKET_HOST, {
-      path: SOCKET_PATH
-    });
+    const socket = socketIOClient(SOCKET_ENDPOINT);
+    // const socket = socketIOClient(SOCKET_HOST, {
+    //   path: SOCKET_PATH
+    // });
     socket.on("FromAPI", (data) => {
       setLoading(false);
       setSocketData(data);
@@ -68,9 +73,10 @@ export const Dashboard = () => {
   }, [socketClientData]);
 
   const handleWALogout = async () => {
-    const socket = socketIOClient(SOCKET_HOST, {
-      path: SOCKET_PATH
-    });
+    // const socket = socketIOClient(SOCKET_HOST, {
+    //   path: SOCKET_PATH,
+    // });
+    const socket = socketIOClient(SOCKET_ENDPOINT);
     socket.emit("logout", true);
     setLoading(true);
     localStorage.removeItem("clientInfo");

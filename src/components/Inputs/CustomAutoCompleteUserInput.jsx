@@ -20,7 +20,8 @@ export const CustomAutoCompleteUserInput = () => {
   const [searchData, setSearchData] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
 
-  const apiUrl = `https://${window.location.host}/gloriglobalsukses-backend/v1`;
+  // const apiUrl = `https://${window.location.host}/gloriglobalsukses-backend/v1`;
+  const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
   const fetchJson = (url, options = {}) => {
     if (!options.headers) {
       options.headers = new Headers();

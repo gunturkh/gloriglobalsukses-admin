@@ -16,7 +16,8 @@ import LoginPage from "./loginPage";
 import moment from "moment";
 import { daysToSendReminderDefaultValue } from "./utils.js";
 
-const apiUrl = `https://${window.location.host}/gloriglobalsukses-backend/v1`;
+// const apiUrl = `https://${window.location.host}/gloriglobalsukses-backend/v1`;
+const apiUrl = `${process.env.REACT_APP_SERVER_URL}`;
 const fetchJson = (url, options = {}) => {
   if (!options.headers) {
     options.headers = new Headers();
@@ -93,7 +94,11 @@ const customDataProvider = {
       params?.data?.status !== "SUDAH DIPESAN DAN BARANG PRODUKSI"
     )
       delete params.data.productionDays;
-    if (!params?.data?.setStatusManually && params?.data?.customStatusMessage === "") delete params.data.customStatusMessage;
+    if (
+      !params?.data?.setStatusManually &&
+      params?.data?.customStatusMessage === ""
+    )
+      delete params.data.customStatusMessage;
     console.log("params.data after delete daysToSendReminder", params?.data);
 
     const imagesURL = [];
@@ -174,7 +179,11 @@ const customDataProvider = {
       params?.data?.status !== "SUDAH DIPESAN DAN BARANG PRODUKSI"
     )
       delete params.data.productionDays;
-    if (!params?.data?.setStatusManually && params?.data?.customStatusMessage === "") delete params.data.customStatusMessage;
+    if (
+      !params?.data?.setStatusManually &&
+      params?.data?.customStatusMessage === ""
+    )
+      delete params.data.customStatusMessage;
     console.log("params.data after delete daysToSendReminder", params?.data);
 
     const imagesURL = [];
@@ -239,7 +248,7 @@ const App = () => {
       dashboard={Dashboard}
       dataProvider={customDataProvider}
       loginPage={LoginPage}
-    // theme={theme}
+      // theme={theme}
     >
       {/* <Resource
         name="posts"
