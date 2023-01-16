@@ -156,6 +156,7 @@ const customDataProvider = {
     const includeDaysToSendReminder = params?.data?.setSendMessageNow && {
       daysToSendReminder: daysToSendReminderDefaultValue(params?.data),
     };
+    const { history, ...restParamsData } = params?.data;
     console.log(
       "daysToSendReminder",
       daysToSendReminderDefaultValue(params?.data)
@@ -220,7 +221,7 @@ const customDataProvider = {
       read: true,
       daysToSendReminderTimestamp: modifiedDaysToSendReminderTimestamp,
       ...includeDaysToSendReminder,
-      history: [...params.data.history, params.data],
+      history: [...params.data.history, restParamsData],
       images: imagesURL,
     };
     return fetchJson(url, {
