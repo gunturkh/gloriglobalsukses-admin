@@ -6,7 +6,7 @@ COPY . .
 
 RUN yarn install
 
-RUN PUBLIC_URL=/gloriglobalsukses-admin GENERATE_SOURCEMAP=false npm run-script build --prod
+RUN GENERATE_SOURCEMAP=false npm run-script build --prod
 
 FROM nginx:alpine
 
